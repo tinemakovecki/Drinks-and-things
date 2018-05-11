@@ -1,7 +1,7 @@
 import re
 import orodja
 
-def zajemi_strani():
+def zajemi_strani_vino():
     '''Zajame podatke iz spletne strani'''
     osnova1 = 'https://winelibrary.com/search?page='
     osnova2 = '&search=&sort_by=popular&varietal%5B%5D=Cabernet+Sauvignon&varie' \
@@ -20,8 +20,21 @@ def zajemi_strani():
         orodja.shrani(naslov, ime_datoteke)
 
 
+def zajemi_strani_pivo():
+    '''Zajame podatke iz spletne strani'''
+    osnova = 'https://www.masterofmalt.com/country/'
+    drzave = [("american-beer", 8),("australian-beer", 1), ("belgian-beer",5), ("danish-beer",4), ("dutch-beer",2),
+              ("english-beer",17), ("german-beer",2), ("icelandic-beer",1), ("japanese-beer",2), ("kiwi-beer",2),
+              ("scotch-beer",5)]
+    for drzava, strani in drzave:
+        for i in range(1,strani+1):
+            naslov = osnova + drzava + "/" + str(i) + "/"
+            ime_datoteke = 'beer/{}-{}.html'.format(drzava,i)
+            orodja.shrani(naslov, ime_datoteke)
+
+
 regex_url = re.compile(
-    r'</div>.*?'               # a je treba dat .*? nakonc vsake vrstice?
+    r'</div>.*?'
     r'<div id="product_id_(?P<id>\d{4,8})" class="search-item">.*?'
     r'<div class="search-item-inner clearfix">.*?'
     r'<div class="search-item-img col-xs-\d{1,3} col-sm-\d{1,3}  col-lg-\d{1,3} text-center">.*?'
@@ -47,4 +60,54 @@ def zajemi_vina():
         orodja.shrani(vino['url'], ime_datoteke)
 
 
-zajemi_vina()
+# lahko ratinga sploh ni
+# lahko je vec kot samo ena vrsta
+regex_vino = re.compile(
+    r'<p itemprop=\'(reviewBody|description)\'>(?P<Review>.*?)(</p>|<br>).*?'
+    r'<td class=\'label\'>Item #</td>.*?'
+    r'<td class=\'data\'>(?P<id>\d{4,8})</td>.*?'
+    r'<td class="label">Country</td>.*?'
+    r'<td class="data"><a href="/search\?country%.*?">(?P<Country>.*?)</a></td>.*?'
+    r'<td class="label">Region</td>.*?'
+    r'<td class="data"><a href="/search\?country%.*?">(?P<Region>.*?)</a></td>.*?'
+    r'<td class="label">Sub-Region</td>.*?'
+    r'<td class="data"><a href="/search\?country%.*?">(?P<SubRegion>.*?)</a></td>.*?'
+    r'<td class="label">Ratings</td>.*?'
+    r'<td class="data">.*?'
+    r'(?P<Ratings>\d{2}).*?'
+    r'<td class="label">Vintage</td>.*?'
+    r'<td class="data">(?P<Vintage>.*?)</td>.*?'
+    r'<td class="label">Color</td>.*?'
+    r'<td class="data"><a href="/search\?color%.*?">(?P<Color>.*?)</a></td>.*?'
+    r'<td class="label">ABV</td>.*?'
+    r'<td class="data">(?P<ABV>\d*[.,]?\d*)%</td>.*?'
+    r'<td class="label">Varietal(s)</td>.*?'
+    r'<td class="data"><a href="/search\?varietal.*?">(?P<Varietal>.*?)</a></td>.*?' #lahko je vec kot samo ena
+    r'<td class="label">Size</td>.*?'
+    r'<td class="data">(?P<Size>.*?)</td>.*?'
+    r'<td class="label">Closure</td>.*?'
+    r'<td class="data">(?P<Closure>.*?)</td>.*?'
+    r'<td class="label">Taste</td>.*?'
+    r'<td class="data">(?P<Taste>.*?)</td>.*?'
+    r'<td class="label">Nose</td>.*?'
+    r'<td class="data">(?P<Smell>.*?)</td>.*?',
+    flags=re.DOTALL)
+
+
+def izloci_podatke_vin(imenik, regex):
+    podatki = []
+    i = 0
+    for datoteka in orodja.datoteke(imenik):
+        print(i)
+        for podatek in re.finditer(regex, orodja.vsebina_datoteke(datoteka)):
+            pod = podatek.groupdict()
+            pod['id'] = int(pod['id'])
+            pod['Ratings'] = int(pod['Ratings'])
+            pod['ABV'] = int(pod['ABV'])
+            podatki.append(pod)
+        i += 1
+    return podatki
+
+
+
+
