@@ -60,27 +60,19 @@ def zajemi_vina():
         orodja.shrani(vino['url'], ime_datoteke)
 
 
-# lahko je vec kot samo ena vrsta
 regex_vino = re.compile(
-    r'<p itemprop=\'(reviewBody|description)\'>(?P<Description>.*?)(</p>|<br>).*?'
+    r'<p itemprop=\'(description|reviewBody(?!(.*?itemprop=\'description)))\'>"?(?P<Description>.*?)"?(</p>|<br>).*?'
     r'<td class=\'label\'>Item #</td>.*?'
     r'<td class=\'data\'>(?P<id>\d{4,8})</td>.*?'
     r'<td class="label">Country</td>.*?'
     r'<td class="data"><a href="/search\?country%.*?">(?P<Country>.*?)</a></td>.*?'
     r'<td class="label">Region</td>.*?'
     r'<td class="data"><a href="/search\?country%.*?">(?P<Region>.*?)</a></td>.*?'
-    r'<td class="label">Sub-Region</td>.*?'
-    r'<td class="data"><a href="/search\?country%.*?">(?P<SubRegion>.*?)</a></td>.*?'
-    r'<td class="label">Ratings</td>.*?'
-    r'<td class="data">.*?'
-    r'(?P<Ratings>\d{0,2}).*?'
-    r'<td class="label">Vintage</td>.*?'
-    r'<td class="data">(?P<Vintage>.*?)</td>.*?'
     r'<td class="label">Color</td>.*?'
     r'<td class="data"><a href="/search\?color%.*?">(?P<Color>.*?)</a></td>.*?'
     r'<td class="label">ABV</td>.*?'
-    r'<td class="data">(?P<ABV>\d*[.,]?\d*)%</td>.*?'
-    r'<td class="data"><a href="/search\?varietal.*?">(?P<Varietal>.*?)</td>.*?'
+    r'<td class="data">(?P<ABV>.*?)%</td>.*?'
+    r'<td class="data"><a href="/search\?varietal%5B%5D.*?"(?P<Varietal>.*?)</td>.*?'
     r'<td class="label">Size</td>.*?'
     r'<td class="data">(?P<Size>.*?)</td>.*?'
     r'<td class="label">Closure</td>.*?'
@@ -92,28 +84,20 @@ regex_vino = re.compile(
     flags=re.DOTALL)
 
 
-regex_vrsta = re.compile(r'>(?P<vrsta>)</a>')
+regex_vrsta = re.compile(r'>(?P<vrsta>.*?)</a>')
 
 
 def izloci_podatke_vin(imenik, regex):
     podatki = []
-    i = 0
     for datoteka in orodja.datoteke(imenik):
         for vino in re.finditer(regex, orodja.vsebina_datoteke(datoteka)):
             pod = vino.groupdict()
             pod['id'] = int(pod['id'])
-            if len(pod['Ratings']) != 0:
-                pod['Ratings'] = int(pod['Ratings'])
-            else:
-                pod['Ratings'] = None
-            vrste = []
-            for vr in re.finditer(regex_vrsta, pod['Varietal']):
-                podv = vr.groupdict()
-                vrste.append(podv['vrsta'])
+            vrste = regex_vrsta.findall(pod['Varietal'])
             pod['Varietal'] = vrste
+            pod['Description'] = str(pod['Description']).replace('\n', '')
             pod['ABV'] = float(pod['ABV'])
             podatki.append(pod)
-        i += 1
     return podatki
 
 podatki = izloci_podatke_vin('vina_manjsa', regex_vino)
