@@ -2,6 +2,7 @@ import re
 import orodja
 import os
 
+
 def zajemi_strani_vino():
     '''Zajame podatke iz spletne strani'''
     osnova1 = 'https://winelibrary.com/search?page='
@@ -47,6 +48,7 @@ regex_url_beer = re.compile(
     r'.com/beer/(?P<url>.*?)" data-productid="(?P<id>\d{4,8})">.*?',
     flags=re.DOTALL
 )
+
 
 def izloci_url(imenik, regex):
     '''Vrne seznam s slovarji podatkov iz imenika'''
@@ -165,9 +167,16 @@ def izloci_podatke_vin(imenik, regex):
             os.remove(datoteka)
     return podatki
 
+
 def csv_vina():
     '''Podatke vin zapiše v csv datoteko'''
     vina = izloci_podatke_vin('vina', regex_vino)
     orodja.zapisi_tabelo(vina, ['id', 'Name', 'ShortDes', 'Color', 'Varietal', 'Price', 'Size', 'ABV', 'Country',
                                 'Region', 'Closure', 'Taste', 'Smell', 'Description'], 'CSV/vina.csv')
+
+
+def csv_piva():
+    piva = izloci_podatke_piv('beer', regex_pivo)
+    orodja.zapisi_tabelo(piva, ['id', 'Name', 'Country', 'Brewery', 'Bottler', 'Style', 'Price', 'Volume', 'ABV',
+                                'Description'], 'CSV/piva.csv')
 
