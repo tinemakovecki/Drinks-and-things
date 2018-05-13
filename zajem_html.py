@@ -161,6 +161,7 @@ def izloci_podatke_piv(imenik, regex):
                 pod['Price'] = float(pod['Price'])
             pod['id'] = int(pod['id'])
             pod['Description'] = str(pod['Description']).replace('\\"', '')
+            pod['Description'] = str(pod['Description']).replace(';', ',')
             podatki.append(pod)
         else:
             print(datoteka)
