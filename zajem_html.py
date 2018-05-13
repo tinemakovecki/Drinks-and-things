@@ -125,26 +125,6 @@ regex_pivo = re.compile(
     flags=re.DOTALL)
 
 
-def izloci_podatke_piv(imenik, regex):
-    '''Iz html datotek izloči podatke vin'''
-    podatki = []
-    for datoteka in orodja.datoteke(imenik):
-        pivo = re.search(regex, orodja.vsebina_datoteke(datoteka))
-        if pivo is not None:
-            pod = pivo.groupdict()
-            if pod['Price'] is None:
-                pod['Price'] = 'Discontinued'
-            else:
-                pod['Price'] = float(pod['Price'])
-            pod['id'] = int(pod['id'])
-            pod['Description'] = str(pod['Description']).replace('\n', '')
-
-            podatki.append(pod)
-        else:
-            print(datoteka)
-    return podatki
-
-
 def izloci_podatke_vin(imenik, regex):
     '''Iz html datotek izloči podatke vin'''
     podatki = []
@@ -168,6 +148,25 @@ def izloci_podatke_vin(imenik, regex):
     return podatki
 
 
+def izloci_podatke_piv(imenik, regex):
+    '''Iz html datotek izloči podatke vin'''
+    podatki = []
+    for datoteka in orodja.datoteke(imenik):
+        pivo = re.search(regex, orodja.vsebina_datoteke(datoteka))
+        if pivo is not None:
+            pod = pivo.groupdict()
+            if pod['Price'] is None:
+                pod['Price'] = 'Discontinued'
+            else:
+                pod['Price'] = float(pod['Price'])
+            pod['id'] = int(pod['id'])
+            pod['Description'] = str(pod['Description']).replace('\\"', '')
+            podatki.append(pod)
+        else:
+            print(datoteka)
+    return podatki
+
+
 def csv_vina():
     '''Podatke vin zapiše v csv datoteko'''
     vina = izloci_podatke_vin('vina', regex_vino)
@@ -179,4 +178,6 @@ def csv_piva():
     piva = izloci_podatke_piv('beer', regex_pivo)
     orodja.zapisi_tabelo(piva, ['id', 'Name', 'Country', 'Brewery', 'Bottler', 'Style', 'Price', 'Volume', 'ABV',
                                 'Description'], 'CSV/piva.csv')
+
+csv_piva()
 
