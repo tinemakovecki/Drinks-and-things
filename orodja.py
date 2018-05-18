@@ -1,7 +1,6 @@
 import csv
 import os
 import sys
-import requests
 
 def pripravi_imenik(ime_datoteke):
     '''ce se ne obstaja, pripravi prazen imenik za dano datoteko.'''
@@ -43,7 +42,7 @@ def datoteke(imenik):
 def zapisi_tabelo(slovarji, imena_polj, ime_datoteke):
     '''Iz seznama slovarjev ustvari CSV datoteko z glavo.'''
     pripravi_imenik(ime_datoteke)
-    with open(ime_datoteke, 'w', encoding='utf-8') as csv_dat:
+    with open(ime_datoteke, 'w', encoding='utf-8', newline='') as csv_dat:
         writer = csv.DictWriter(csv_dat, fieldnames=imena_polj, delimiter = ';')
         writer.writeheader()
         for slovar in slovarji:
