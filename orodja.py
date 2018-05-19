@@ -1,6 +1,7 @@
 import csv
 import os
 import sys
+import requests
 
 def pripravi_imenik(ime_datoteke):
     '''ce se ne obstaja, pripravi prazen imenik za dano datoteko.'''
@@ -47,3 +48,61 @@ def zapisi_tabelo(slovarji, imena_polj, ime_datoteke):
         writer.writeheader()
         for slovar in slovarji:
             writer.writerow(slovar)
+
+
+# DATA PRE-PROCESSING:
+# needed for easier upload to database
+
+def transform_beer():
+
+    directory = os.path.dirname(__file__)
+    file = directory +'/CSV/piva2.csv'
+
+    beers = []
+    country_dic = {'Scotch Beer': 'Scotland',
+                   'English Beer': 'England',
+                   'Belgian Beer': 'Belgium',
+                   'American Beer': 'United States',
+                   'Japanese Beer': 'Japan',
+                   'Dutch Beer': 'Netherlands',
+                   'Danish Beer': 'Denmark',
+                   'Kiwi Beer': 'New Zealand',
+                   'Australian Beer': 'Australia',
+                   'German Beer': 'Germany',
+                   'Icelandic Beer': 'Iceland'}
+
+    # transform the file into a list of dictionaries, where each element represents a beer
+    # along the way the entries are changed to a more practical form
+    with open(file, encoding='utf-8',) as source:
+        reader = csv.DictReader(source, delimiter=';')
+        for row in reader:
+            ime = row['Name']
+            pivovarna = row['Brewery']
+            vrsta = row['Style']
+            velikost = row['Volume']
+            stopnja_alkohola = row['ABV']
+            drzava = country_dic[row['Country']]
+
+            if row['Price'] == 'Discontinued':
+                cena = None
+            else:
+                cena = row['Price']
+
+            entry = {'ime': ime,
+                     'pivovarna': pivovarna,
+                     'vrsta': vrsta,
+                     'velikost': velikost,
+                     'stopnja_alkohola': stopnja_alkohola,
+                     'drzava': drzava,
+                     'cena': cena,
+                     'opis': ''}
+            beers.append(entry)
+
+    column_names = ['ime', 'pivovarna', 'vrsta', 'velikost',
+                    'stopnja_alkohola', 'drzava', 'cena', 'opis']
+
+    # write a new file with the adjusted data
+    zapisi_tabelo(beers, column_names, 'beers.csv')
+
+
+transform_beer()
