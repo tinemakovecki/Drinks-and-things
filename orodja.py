@@ -120,6 +120,3 @@ def transform_beer():
 
     # write a new file with the adjusted data
     zapisi_tabelo(beers, column_names, 'beers.csv')
-
-
-transform_beer()
