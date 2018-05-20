@@ -56,7 +56,7 @@ def zapisi_tabelo(slovarji, imena_polj, ime_datoteke):
 def transform_beer():
 
     directory = os.path.dirname(__file__)
-    file = directory +'/CSV/piva2.csv'
+    file = directory +'/CSV/piva.csv'
 
     beers = []
     country_dic = {'Scotch Beer': 'Scotland',
@@ -79,15 +79,32 @@ def transform_beer():
             ime = row['Name']
             pivovarna = row['Brewery']
             vrsta = row['Style']
-            velikost = row['Volume']
-            stopnja_alkohola = row['ABV']
+            opis = row['Description']
             drzava = country_dic[row['Country']]
 
+            # velikost:
+            velikost = ""
+            for sign in str(row['Volume']):
+                if sign not in "cl":
+                    velikost += sign
+            velikost = float(velikost) / 100
+
+            # stopnja_alkohola:
+            stopnja_alkohola = ""
+            for sign in str(row['ABV']):
+                if sign == ',':
+                    stopnja_alkohola += '.'
+                else:
+                    stopnja_alkohola += sign
+            stopnja_alkohola = float(stopnja_alkohola)
+
+            # cena:
             if row['Price'] == 'Discontinued':
                 cena = None
             else:
                 cena = row['Price']
 
+            # write a dictionary for each beer
             entry = {'ime': ime,
                      'pivovarna': pivovarna,
                      'vrsta': vrsta,
@@ -95,7 +112,7 @@ def transform_beer():
                      'stopnja_alkohola': stopnja_alkohola,
                      'drzava': drzava,
                      'cena': cena,
-                     'opis': ''}
+                     'opis': opis}
             beers.append(entry)
 
     column_names = ['ime', 'pivovarna', 'vrsta', 'velikost',
