@@ -73,7 +73,7 @@ def transform_beer():
 
     # transform the file into a list of dictionaries, where each element represents a beer
     # along the way the entries are changed to a more practical form
-    with open(file, encoding='utf-8',) as source:
+    with open(file, encoding='utf-8') as source:
         reader = csv.DictReader(source, delimiter=';')
         for row in reader:
             ime = row['Name']
