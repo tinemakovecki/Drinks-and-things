@@ -33,19 +33,26 @@ def delete_table(name):
     connection.commit()
 
 
-def insert_into_table(table_name, column_names, entry_values):
+def insert_into_table(table_name, new_entry):  # TODO: test!
     """ Inserts an entry into the selected table """
 
-    # column names and entry values are lists
+    # getting column names
+    column_names = new_entry.keys()
+    # piecing together the sql command
     names = ', '.join(column_names)
-    values = ', '.join(entry_values)
-
-    cur.execute("""
-        INSERT INTO {}
+    values = ""
+    for name in column_names:
+        values += "%({})s, ".format(name)
+    values = values[:-2]
+    sql_command = """   INSERT INTO {}
         ({})
         VALUES 
         ({})
-        """.format(table_name, names, values))
+    """.format(table_name, names, values)
+
+    # execute the insert
+    cur.execute(sql_command,
+                new_entry)
     connection.commit()
 
 
@@ -56,7 +63,7 @@ def upload_data(table, column_names, data_file):
         next(read)  # leave out the head line
         for entry in read:
             values = [None if x in ('', '-') else x for x in entry]
-            insert_into_table(table, column_names, values)
+            insert_into_table(table, column_names, values)  # TODO: change for new insert function
 
 
 # open a connection with the database
@@ -69,10 +76,12 @@ cur = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 # ====================================== #
 # All the needed sql strings that will be used for creating the database
 
-vrste_hrane = """   ime TEXT PRIMARY KEY
+vrste_hrane = """   id SERIAL PRIMARY KEY
+    ime TEXT UNIQUE
 """
 
-vrste_pijace = """  ime TEXT PRIMARY KEY
+vrste_pijace = """  id SERIAL PRIMARY KEY
+    ime TEXT UNIQUE
 """
 
 # price = None usually means the drink is discontinued or unavailable
@@ -84,24 +93,25 @@ pijaca = """    id SERIAL PRIMARY KEY,
     velikost NUMERIC NOT NULL,
     stopnja_alkohola NUMERIC NOT NULL,
     vrsta TEXT REFERENCES vrste_pijace(ime),
-    pivo_id INTEGER REFERENCES pivo(id),
-    vino_id INTEGER REFERENCES vino(id),
     cena NUMERIC,
     opis TEXT
 """
 
-pivo = """id SERIAL PRIMARY KEY,
-    pivovarna TEXT NOT NULL
+# TODO: check if it works correctly
+pivo = """    id INTEGER REFERENCES pijaca(id),
+    pivovarna TEXT NOT NULL,
+    FOREIGN KEY (id) REFERENCES pijaca(id)
 """
 
-vino = """  id SERIAL PRIMARY KEY,
+vino = """    id INTEGER REFERENCES pijaca(id),
     barva TEXT NOT NULL,
-    regija TEXT
+    regija TEXT,
+    FOREIGN KEY (id) REFERENCES pijaca(id)
 """
 
 priporocila = """   id SERIAL PRIMARY KEY,
-    vrsta_hrane TEXT REFERENCES vrste_hrane(ime),
-    vrsta_pijace TEXT REFERENCES vrste_pijace(ime)
+    vrsta_hrane INTEGER REFERENCES vrste_hrane(id),
+    vrsta_pijace INTEGER REFERENCES vrste_pijace(id)
 """
 
 # ====================================== #
@@ -112,9 +122,9 @@ priporocila = """   id SERIAL PRIMARY KEY,
 # create_table('vrste_hrane', vrste_hrane)
 # create_table('vrste_pijace', vrste_pijace)
 # create_table('priporocila', priporocila)
+# create_table('pijaca', pijaca)
 # create_table('pivo', pivo)
 # create_table('vino', vino)
-# create_table('pijaca', pijaca)
 
 
 # UPLOADING DATA:
@@ -133,43 +143,31 @@ def beer_upload():
             if entry['vrsta'] not in uploaded_categories:
                 cur.execute("""INSERT INTO vrste_pijace(ime)
                 VALUES
-                ('{}')
-                """.format(entry['vrsta']))
+                (%s)
+                """, [entry['vrsta']])
                 connection.commit()
                 uploaded_categories.append(entry['vrsta'])
 
-            # table pivo
-            cur.execute("""INSERT INTO pivo(pivovarna)
+            # table pijaca
+            cur.execute("""INSERT INTO
+                pijaca(ime, vrsta, velikost, stopnja_alkohola, drzava, cena, opis)
             VALUES
-            ($${}$$)
+                (%(ime)s, %(vrsta)s, %(velikost)s, %(stopnja_alkohola)s, %(drzava)s, %(cena)s, %(opis)s)
             RETURNING id
-            """.format(entry['pivovarna']))
+            """, entry)
             return_id, = cur.fetchone()
             connection.commit()
 
-            # table pijaca
-            if entry['cena'] == '':
-                cena = 'NULL'
-            else:
-                cena = entry['cena']
-
-            sql_string = """INSERT INTO
-            pijaca(ime, vrsta, velikost, stopnja_alkohola, drzava, pivo_id, cena, opis)
+            # table pivo
+            pivce = {'id': return_id, 'pivovarna': entry['pivovarna']}
+            cur.execute("""INSERT INTO pivo(id, pivovarna)
             VALUES
-            ($${}$$, '{}', {}, {}, '{}', {}, {}, $${}$$)
-            """.format(entry['ime'],
-                       entry['vrsta'],
-                       entry['velikost'],
-                       entry['stopnja_alkohola'],
-                       entry['drzava'],
-                       return_id,
-                       cena,
-                       entry['opis'])
-            cur.execute(sql_string)
+            (%(id)s, %(pivovarna)s)
+            """, pivce)
             connection.commit()
 
     print('Upload successful!')
 
 
 # execute the upload
-beer_upload()
+# beer_upload()
