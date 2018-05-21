@@ -76,11 +76,11 @@ cur = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
 # ====================================== #
 # All the needed sql strings that will be used for creating the database
 
-vrste_hrane = """   id SERIAL PRIMARY KEY
+vrste_hrane = """   id SERIAL PRIMARY KEY,
     ime TEXT UNIQUE
 """
 
-vrste_pijace = """  id SERIAL PRIMARY KEY
+vrste_pijace = """  id SERIAL PRIMARY KEY,
     ime TEXT UNIQUE
 """
 
@@ -97,16 +97,15 @@ pijaca = """    id SERIAL PRIMARY KEY,
     opis TEXT
 """
 
-# TODO: check if it works correctly
 pivo = """    id INTEGER REFERENCES pijaca(id),
     pivovarna TEXT NOT NULL,
-    FOREIGN KEY (id) REFERENCES pijaca(id)
+    PRIMARY KEY (id)
 """
 
 vino = """    id INTEGER REFERENCES pijaca(id),
     barva TEXT NOT NULL,
     regija TEXT,
-    FOREIGN KEY (id) REFERENCES pijaca(id)
+    PRIMARY KEY (id)
 """
 
 priporocila = """   id SERIAL PRIMARY KEY,
@@ -149,6 +148,9 @@ def beer_upload():
                 uploaded_categories.append(entry['vrsta'])
 
             # table pijaca
+            if entry['cena'] == '':
+                entry['cena'] = None
+
             cur.execute("""INSERT INTO
                 pijaca(ime, vrsta, velikost, stopnja_alkohola, drzava, cena, opis)
             VALUES
@@ -170,4 +172,4 @@ def beer_upload():
 
 
 # execute the upload
-# beer_upload()
+beer_upload()
