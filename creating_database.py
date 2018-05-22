@@ -95,7 +95,7 @@ pijaca = """    id SERIAL PRIMARY KEY,
     ime TEXT NOT NULL,
     drzava TEXT NOT NULL,
     velikost NUMERIC NOT NULL,
-    stopnja_alkohola NUMERIC NOT NULL,
+    stopnja_alkohola NUMERIC,
     vrsta INTEGER REFERENCES vrste_pijace(id),
     cena NUMERIC,
     opis TEXT
@@ -149,7 +149,6 @@ def beer_upload():
                 RETURNING id
                 """, [entry['vrsta']])
                 cat_id, = cur.fetchone()  # save the id to insert it into 'pijaca' table
-                connection.commit()
                 uploaded_categories[entry['vrsta']] = cat_id
 
             # table pijaca
@@ -166,7 +165,6 @@ def beer_upload():
             RETURNING id
             """, entry)
             return_id, = cur.fetchone()
-            connection.commit()
 
             # table pivo
             pivce = {'id': return_id, 'pivovarna': entry['pivovarna']}
@@ -174,8 +172,8 @@ def beer_upload():
             VALUES
             (%(id)s, %(pivovarna)s)
             """, pivce)
-            connection.commit()
 
+    connection.commit()
     print('Upload successful!')
 
 
@@ -197,7 +195,7 @@ def wine_upload():
                 RETURNING id
                 """, [entry['vrsta']])
                 cat_id, = cur.fetchone()  # save the id to insert it into 'pijaca' table
-                connection.commit()
+                #connection.commit()
                 uploaded_categories[entry['vrsta']] = cat_id
 
             # table pijaca
@@ -214,7 +212,6 @@ def wine_upload():
             RETURNING id
             """, entry)
             return_id, = cur.fetchone()
-            connection.commit()
 
             # table vino
             vince = {'id': return_id, 'barva': entry['barva'], 'regija': entry['regija']}
@@ -222,11 +219,11 @@ def wine_upload():
             VALUES
             (%(id)s, %(barva)s, %(regija)s)
             """, vince)
-            connection.commit()
 
+    connection.commit()
     print('Upload successful!')
 
 
 # execute the upload
 # beer_upload()
-wine_upload()
+# wine_upload()
