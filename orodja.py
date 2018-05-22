@@ -1,7 +1,7 @@
 import csv
 import os
 import sys
-import requests
+# import requests
 
 def pripravi_imenik(ime_datoteke):
     '''ce se ne obstaja, pripravi prazen imenik za dano datoteko.'''
@@ -54,7 +54,7 @@ def zapisi_tabelo(slovarji, imena_polj, ime_datoteke):
 # needed for easier upload to database
 
 def transform_beer():
-
+    """ Rewrites the beer data into a better format """
     directory = os.path.dirname(__file__)
     file = directory +'/CSV/piva.csv'
 
@@ -120,3 +120,75 @@ def transform_beer():
 
     # write a new file with the adjusted data
     zapisi_tabelo(beers, column_names, 'beers.csv')
+
+
+def transform_wine():
+    """ Rewrites the wine data into a better format """
+    directory = os.path.dirname(__file__)
+    file = directory +'/CSV/vina.csv'
+
+    wines = []
+
+    # the wines will be read and saved in list of dictionaries
+    # the column names and data are adjusted along the way
+    with open(file, encoding='utf-8') as source:
+        reader = csv.DictReader(source, delimiter=';')
+        for row in reader:
+            ime = row['Name']
+            barva = row['Color']
+            cena = row['Price']
+            stopnja_alkohola = row['ABV']
+            drzava = row['Country']
+            regija = row['Region']
+            # TODO: filter the descriptions for nonsense!
+            opis = row['Description']
+
+            # velikost:
+            velikost = ""
+
+            if "mL" in str(row['Size']):
+                for sign in str(row['Size']):
+                    if sign not in " mL":
+                        velikost += sign
+                velikost = float(velikost) / 1000
+            else:
+                for sign in str(row['Size']):
+                    if sign != "l":
+                        velikost += sign
+                velikost = float(velikost)
+
+            # vrsta:
+            # parsing the strings
+            sorts = row['Varietal']
+            sorts = sorts.split(',')
+
+            types = []
+            for sort in sorts:
+                entry = sort.strip("""[] ''""")
+                types.append(entry)
+
+            if len(types) == 1:
+                vrsta = types[0]
+            else:
+                vrsta = 'blend'
+
+            # write a dictionary for each wine
+            entry = {'ime': ime,
+                     'vrsta': vrsta,
+                     'barva': barva,
+                     'velikost': velikost,
+                     'stopnja_alkohola': stopnja_alkohola,
+                     'drzava': drzava,
+                     'regija': regija,
+                     'cena': cena,
+                     'opis': opis}
+            wines.append(entry)
+
+    column_names = wines[0].keys()
+    zapisi_tabelo(wines, column_names, 'wines.csv')
+
+transform_wine()
+
+
+
+

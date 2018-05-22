@@ -132,10 +132,9 @@ priporocila = """   id SERIAL PRIMARY KEY,
 
 # UPLOADING DATA:
 def beer_upload():
-    """ Uploads data from the beer file into the database.
-    Because of several references etc. it requires a separate function. """
-    # preparation
-    uploaded_categories = []
+    """ Uploads data from the beer file into the database. """
+    # we'll keep a dictionary of uploaded categories and their ids
+    uploaded_categories = {}
 
     with open('beers.csv', encoding='utf-8') as file:
         read = csv.DictReader(file, delimiter=';')
@@ -147,13 +146,18 @@ def beer_upload():
                 cur.execute("""INSERT INTO vrste_pijace(ime)
                 VALUES
                 (%s)
+                RETURNING id
                 """, [entry['vrsta']])
+                cat_id, = cur.fetchone()  # save the id to insert it into 'pijaca' table
                 connection.commit()
-                uploaded_categories.append(entry['vrsta'])
+                uploaded_categories[entry['vrsta']] = cat_id
 
             # table pijaca
             if entry['cena'] == '':
                 entry['cena'] = None
+
+            # switch the dictionary to contain vrsta id
+            entry['vrsta'] = uploaded_categories[entry['vrsta']]
 
             cur.execute("""INSERT INTO
                 pijaca(ime, vrsta, velikost, stopnja_alkohola, drzava, cena, opis)
@@ -175,5 +179,54 @@ def beer_upload():
     print('Upload successful!')
 
 
+def wine_upload():
+    """ Uploads data from the wine file into the database. """
+    # we'll keep a dictionary of uploaded categories and their ids
+    uploaded_categories = {}
+
+    with open('wines.csv', encoding='utf-8') as file:
+        read = csv.DictReader(file, delimiter=';')
+        next(read)  # leave out the head line
+        for entry in read:
+
+            # table vrste_pijace
+            if entry['vrsta'] not in uploaded_categories:
+                cur.execute("""INSERT INTO vrste_pijace(ime)
+                VALUES
+                (%s)
+                RETURNING id
+                """, [entry['vrsta']])
+                cat_id, = cur.fetchone()  # save the id to insert it into 'pijaca' table
+                connection.commit()
+                uploaded_categories[entry['vrsta']] = cat_id
+
+            # table pijaca
+            if entry['stopnja_alkohola'] == '':
+                entry['stopnja_alkohola'] = None
+
+            # switch the dictionary to contain vrsta id
+            entry['vrsta'] = uploaded_categories[entry['vrsta']]
+
+            cur.execute("""INSERT INTO
+                pijaca(ime, vrsta, velikost, stopnja_alkohola, drzava, cena, opis)
+            VALUES
+                (%(ime)s, %(vrsta)s, %(velikost)s, %(stopnja_alkohola)s, %(drzava)s, %(cena)s, %(opis)s)
+            RETURNING id
+            """, entry)
+            return_id, = cur.fetchone()
+            connection.commit()
+
+            # table vino
+            vince = {'id': return_id, 'barva': entry['barva'], 'regija': entry['regija']}
+            cur.execute("""INSERT INTO vino(id, barva, regija)
+            VALUES
+            (%(id)s, %(barva)s, %(regija)s)
+            """, vince)
+            connection.commit()
+
+    print('Upload successful!')
+
+
 # execute the upload
 # beer_upload()
+wine_upload()
