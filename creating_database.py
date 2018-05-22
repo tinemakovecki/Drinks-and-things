@@ -28,8 +28,8 @@ def create_table(name, sql_description):
 def delete_table(name):
     """ Deletes a table """
     cur.execute("""
-        DROP TABLE {};
-        """.format(name))
+        DROP TABLE %s;
+        """, name)
     connection.commit()
 
 
@@ -38,12 +38,16 @@ def insert_into_table(table_name, new_entry):  # TODO: test!
 
     # getting column names
     column_names = new_entry.keys()
-    # piecing together the sql command
+
+    # constructing a string for the sql command:
     names = ', '.join(column_names)
+    # we format the "values" part of the string
+    # so that .execute() will be able to insert parameters into the command
     values = ""
     for name in column_names:
         values += "%({})s, ".format(name)
     values = values[:-2]
+    # format the parts together
     sql_command = """   INSERT INTO {}
         ({})
         VALUES 
@@ -56,15 +60,15 @@ def insert_into_table(table_name, new_entry):  # TODO: test!
     connection.commit()
 
 
-def upload_data(table, column_names, data_file):
-    """ Uploads data from a selected file into a table. The data file has to be in .csv format. """
+def upload_data(table, data_file):
+    """ Uploads data from a selected file into a table. The data file has to be in .csv format.
+        The column names of the file have to match the attributes of the chosen table. """
     with open(data_file, encoding='utf-8') as file:
-        read = csv.reader(file, delimiter=';')
+        read = csv.DictReader(file, delimiter=';')
         next(read)  # leave out the head line
         for entry in read:
-            values = [None if x in ('', '-') else x for x in entry]
-            insert_into_table(table, column_names, values)  # TODO: change for new insert function
-
+            column_names = entry.keys()
+            insert_into_table(table, column_names, entry)
 
 # open a connection with the database
 connection = psycopg2.connect(database=auth.db, host=auth.host, user=auth.user, password=auth.password)
@@ -92,7 +96,7 @@ pijaca = """    id SERIAL PRIMARY KEY,
     drzava TEXT NOT NULL,
     velikost NUMERIC NOT NULL,
     stopnja_alkohola NUMERIC NOT NULL,
-    vrsta TEXT REFERENCES vrste_pijace(ime),
+    vrsta INTEGER REFERENCES vrste_pijace(id),
     cena NUMERIC,
     opis TEXT
 """
@@ -172,4 +176,4 @@ def beer_upload():
 
 
 # execute the upload
-beer_upload()
+# beer_upload()
