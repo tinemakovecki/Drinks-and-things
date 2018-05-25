@@ -84,13 +84,21 @@ vrste_hrane = """   id SERIAL PRIMARY KEY,
     ime TEXT UNIQUE
 """
 
+jed = """    id SERIAL PRIMARY KEY,
+    ime TEXT UNIQUE NOT NULL,
+    opis TEXT
+"""
+
+vrsta_jedi = """    id SERIAL PRIMARY KEY,
+    jed INTEGER REFERENCES jed(id),
+    vrsta INTEGER REFERENCES vrste_hrane(id)
+"""
+
 vrste_pijace = """  id SERIAL PRIMARY KEY,
     ime TEXT UNIQUE
 """
 
 # price = None usually means the drink is discontinued or unavailable
-# pivo_id = None -> the drink is a wine
-# vino_id = None -> the drink is a beer
 pijaca = """    id SERIAL PRIMARY KEY,
     ime TEXT NOT NULL,
     drzava TEXT NOT NULL,
@@ -112,9 +120,28 @@ vino = """    id INTEGER REFERENCES pijaca(id),
     PRIMARY KEY (id)
 """
 
+aroma = """    id SERIAL PRIMARY KEY,
+    ime TEXT UNIQUE NOT NULL
+"""
+
+ima_vonj = """    id SERIAL PRIMARY KEY,
+    aroma INTEGER NOT NULL REFERENCES aroma(id),
+    vino INTEGER NOT NULL REFERENCES vino(id)
+"""
+
+okusi = """    id SERIAL PRIMARY KEY,
+    ime TEXT UNIQUE NOT NULL
+"""
+
+ima_okus = """    id SERIAL PRIMARY KEY,
+    okus INTEGER NOT NULL REFERENCES okusi(id),
+    vino INTEGER NOT NULL REFERENCES vino(id)
+"""
+
 priporocila = """   id SERIAL PRIMARY KEY,
     vrsta_hrane INTEGER REFERENCES vrste_hrane(id),
-    vrsta_pijace INTEGER REFERENCES vrste_pijace(id)
+    vrsta_pijace INTEGER REFERENCES vrste_pijace(id),
+    is_good BIT NOT NULL
 """
 
 # ====================================== #
@@ -123,11 +150,21 @@ priporocila = """   id SERIAL PRIMARY KEY,
 
 # CREATING THE TABLES:
 # create_table('vrste_hrane', vrste_hrane)
+# create_table('jed', jed)
+# create_table('vrsta_jedi', vrsta_jedi)
+
 # create_table('vrste_pijace', vrste_pijace)
 # create_table('priporocila', priporocila)
 # create_table('pijaca', pijaca)
 # create_table('pivo', pivo)
+
 # create_table('vino', vino)
+# create_table('aroma', aroma)
+# create_table('ima_vonj', ima_vonj)
+# create_table('okusi', okusi)
+# create_table('ima_okus', ima_okus)
+
+
 
 
 # UPLOADING DATA:
