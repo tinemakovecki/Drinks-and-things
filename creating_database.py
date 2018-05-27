@@ -149,20 +149,20 @@ priporocila = """   id SERIAL PRIMARY KEY,
 # ====================================== #
 
 # CREATING THE TABLES:
-# create_table('vrste_hrane', vrste_hrane)
-# create_table('jed', jed)
-# create_table('vrsta_jedi', vrsta_jedi)
+create_table('vrste_hrane', vrste_hrane)
+create_table('jed', jed)
+create_table('vrsta_jedi', vrsta_jedi)
 
-# create_table('vrste_pijace', vrste_pijace)
-# create_table('priporocila', priporocila)
-# create_table('pijaca', pijaca)
-# create_table('pivo', pivo)
+create_table('vrste_pijace', vrste_pijace)
+create_table('priporocila', priporocila)
+create_table('pijaca', pijaca)
+create_table('pivo', pivo)
 
-# create_table('vino', vino)
-# create_table('aroma', aroma)
-# create_table('ima_vonj', ima_vonj)
-# create_table('okusi', okusi)
-# create_table('ima_okus', ima_okus)
+create_table('vino', vino)
+create_table('aroma', aroma)
+create_table('ima_vonj', ima_vonj)
+create_table('okusi', okusi)
+create_table('ima_okus', ima_okus)
 
 
 
@@ -212,6 +212,7 @@ def beer_upload():
 
     connection.commit()
     print('Upload successful!')
+    return uploaded_categories
 
 
 def wine_upload():
@@ -259,8 +260,60 @@ def wine_upload():
 
     connection.commit()
     print('Upload successful!')
+    return uploaded_categories
 
 
 # execute the upload
-# beer_upload()
-# wine_upload()
+beer_ids = beer_upload()
+wine_ids = wine_upload()
+
+
+# ====================================== #
+# PAIRING
+# ====================================== #
+
+# VARIETIES
+bold_red = ['Malbec', 'Syrah / Shiraz', '	Mourvedre / Mataro / Monastrell / Garrut', 'Petite Sirah', 'Cabernet Sauvignon']
+medium_red = ['Merlot', 'Sangiovese', 'Zinfandel', 'Cabernet Franc', 'Tempranillo / Tinto Fino / Tinta Roriz', 'Nebbiolo']
+light_red = ['Pinot Noir', 'Grenache / Garnacha', 'Gamay', 'Carignan / Carinena']
+rich_white = ['Chardonnay', 'Roussanne']
+light_white = ['Sauvignon Blanc', 'Pinot Bianco / Pinot Blanc', 'Pinot Gris / Pinot Grigio']
+sweet_white = ['Muscat', 'Riesling', 'Chenin Blanc', 'Malvasia']
+dessert = ['Port Varieties', 'Sherry Varieties']
+unmatched = ['Cinsault', 'Refosco', 'Petit Verdot', 'Pinot Meunier'] # racen prvega vsi pomojem samo v blendih
+
+# PERFECT MATCHES
+perfect_matches = {'red meat': bold_red, 'cured meat': light_red + sweet_white, 'pork': medium_red,         # meat
+                   'poultry': light_red + rich_white, 'mollusk': [], 'fish': light_white, 'shellfish': rich_white,
+                   'grilled': bold_red, 'fried': light_red, 'smoked': medium_red, 'roasted': bold_red,     # preparation
+                   'steamed': light_white,
+                   'soft': light_red + rich_white, 'pungent': medium_red + dessert, 'hard': bold_red,       # cheese
+                   'alliums': medium_red, 'green': light_white, 'root': [], 'nightshades': medium_red,      # vegetable
+                   'funghi': medium_red + light_red + rich_white, 'nuts': sweet_white, 'beans': light_white,
+                   'black pepper': bold_red, 'red pepper': medium_red, 'spicy': sweet_white,                # spices
+                   'herbs': light_white, 'baking spices': dessert, 'exotic': medium_red + sweet_white,
+                   'white starches': [], 'whole wheat': sweet_white,                                        # starches
+                   'sweet starchy vegetables': sweet_white, 'potato': [],
+                   'fruit': sweet_white, 'vanilla': [], 'chocolate': dessert, 'coffee': dessert}            # sweet
+
+matches = {'red meat': medium_red, 'cured meat': bold_red + medium_red + dessert, 'pork': bold_red,         # meat
+           'poultry': medium_red + light_white, 'mollusk': light_white, 'fish': rich_white,
+           'shellfish': light_white + sweet_white,
+           'grilled': medium_red + light_red + sweet_white, 'fried': rich_white + light_white,             # preparation
+           'smoked': bold_red + light_red + dessert, 'roasted': medium_red + light_red + sweet_white,
+           'steamed': rich_white + sweet_white,
+           'soft': medium_red + light_white + sweet_white + dessert,                                        # cheese
+           'pungent': bold_red + light_white + sweet_white, 'hard': medium_red + rich_white,
+           'alliums': bold_red + light_red + rich_white + light_white + sweet_white, 'green': [],           # vegetable
+           'root': rich_white + sweet_white, 'nightshades': bold_red + sweet_white, 'funghi': bold_red,
+           'nuts': light_red + rich_white + light_white, 'beans': medium_red,
+           'black pepper': medium_red, 'red pepper': bold_red + light_white + sweet_white,                  # spices
+           'spicy': light_white, 'herbs': medium_red + light_red + rich_white,
+           'baking spices': medium_red + sweet_white,'exotic': light_red,
+           'white starches': bold_red + medium_red + light_red + rich_white + light_white + sweet_white +   # starches
+                             dessert, 'whole wheat': light_red + rich_white, 'sweet starchy vegetables': [],
+           'potato': bold_red + medium_red + light_red + rich_white + light_white + sweet_white,
+           'fruit': dessert, 'vanilla': sweet_white + dessert, 'chocolate': [], 'coffee': []}               # sweet
+
+
+
