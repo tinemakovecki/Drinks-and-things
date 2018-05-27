@@ -141,7 +141,7 @@ ima_okus = """    id SERIAL PRIMARY KEY,
 priporocila = """   id SERIAL PRIMARY KEY,
     vrsta_hrane INTEGER REFERENCES vrste_hrane(id),
     vrsta_pijace INTEGER REFERENCES vrste_pijace(id),
-    is_good BIT NOT NULL
+    is_perfect BIT NOT NULL
 """
 
 # ====================================== #
@@ -273,14 +273,14 @@ wine_ids = wine_upload()
 # ====================================== #
 
 # VARIETIES
-bold_red = ['Malbec', 'Syrah / Shiraz', '	Mourvedre / Mataro / Monastrell / Garrut', 'Petite Sirah', 'Cabernet Sauvignon']
+bold_red = ['Malbec', 'Syrah / Shiraz', 'Mourvedre / Mataro / Monastrell / Garrut', 'Petite Sirah', 'Cabernet Sauvignon']
 medium_red = ['Merlot', 'Sangiovese', 'Zinfandel', 'Cabernet Franc', 'Tempranillo / Tinto Fino / Tinta Roriz', 'Nebbiolo']
 light_red = ['Pinot Noir', 'Grenache / Garnacha', 'Gamay', 'Carignan / Carinena']
 rich_white = ['Chardonnay', 'Roussanne']
 light_white = ['Sauvignon Blanc', 'Pinot Bianco / Pinot Blanc', 'Pinot Gris / Pinot Grigio']
 sweet_white = ['Muscat', 'Riesling', 'Chenin Blanc', 'Malvasia']
 dessert = ['Port Varieties', 'Sherry Varieties']
-unmatched = ['Cinsault', 'Refosco', 'Petit Verdot', 'Pinot Meunier'] # racen prvega vsi pomojem samo v blendih
+unmatched = ['Cinsault', 'Refosco', 'Petit Verdot', 'Pinot Meunier'] # razen prvega vsi pomojem samo v blendih
 
 # PERFECT MATCHES
 perfect_matches = {'red meat': bold_red, 'cured meat': light_red + sweet_white, 'pork': medium_red,         # meat
@@ -316,4 +316,40 @@ matches = {'red meat': medium_red, 'cured meat': bold_red + medium_red + dessert
            'fruit': dessert, 'vanilla': sweet_white + dessert, 'chocolate': [], 'coffee': []}               # sweet
 
 
+def food_upload():
+    uploaded_food = {}
+    for food in matches:
+        cur.execute("""INSERT INTO vrste_hrane(ime)
+                        VALUES
+                        (%s)
+                        RETURNING id
+                        """, [food])
+        cat_id, = cur.fetchone()
+        uploaded_food[food] = cat_id
+    connection.commit()
+    print('Upload successful!')
+    return uploaded_food
 
+
+food_ids = food_upload()
+
+
+def pairing_upload():
+    for food in matches:
+        for sort in matches[food]:
+            pair = {'vrsta_pijace': wine_ids[sort], 'vrsta_hrane': food_ids[food], 'is_perfect': '0'}
+            cur.execute("""INSERT INTO priporocila(vrsta_hrane, vrsta_pijace, is_perfect)
+                        VALUES
+                        (%(vrsta_hrane)s, %(vrsta_pijace)s, %(is_perfect)s)
+                        """, pair)
+        for sort in perfect_matches[food]:
+            pair = {'vrsta_pijace': wine_ids[sort], 'vrsta_hrane': food_ids[food], 'is_perfect': '1'}
+            cur.execute("""INSERT INTO priporocila(vrsta_hrane, vrsta_pijace, is_perfect)
+                                    VALUES
+                                    (%(vrsta_hrane)s, %(vrsta_pijace)s, %(is_perfect)s)
+                                    """, pair)
+    connection.commit()
+    print('Upload successful!')
+
+
+pairing_upload()
