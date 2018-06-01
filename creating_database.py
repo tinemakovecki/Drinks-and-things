@@ -41,18 +41,18 @@ def insert_into_table(table_name, new_entry):  # TODO: test!
 
     # constructing a string for the sql command:
     names = ', '.join(column_names)
-    # we format the "values" part of the string
+    # we format the values part of the string
     # so that .execute() will be able to insert parameters into the command
-    values = ""
+    filler_string = ""
     for name in column_names:
-        values += "%({})s, ".format(name)
-    values = values[:-2]
+        filler_string += "%({})s, ".format(name)
+    filler_string = filler_string[:-2]
     # format the parts together
     sql_command = """   INSERT INTO {}
         ({})
         VALUES 
         ({})
-    """.format(table_name, names, values)
+    """.format(table_name, names, filler_string)
 
     # execute the insert
     cur.execute(sql_command,
