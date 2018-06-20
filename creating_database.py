@@ -272,6 +272,8 @@ wine_ids = wine_upload()
 # PAIRING
 # ====================================== #
 
+# ===== WINE ===== #
+
 # VARIETIES
 bold_red = ['Malbec', 'Syrah / Shiraz', 'Mourvedre / Mataro / Monastrell / Garrut', 'Petite Sirah', 'Cabernet Sauvignon']
 medium_red = ['Merlot', 'Sangiovese', 'Zinfandel', 'Cabernet Franc', 'Tempranillo / Tinto Fino / Tinta Roriz', 'Nebbiolo']
@@ -353,3 +355,56 @@ def pairing_upload():
 
 
 pairing_upload()
+
+# ===== BEER ===== #
+# note: because of the sources available, wine matches could be split into "perfect" and "OK" categories,
+# but the beer matches can't be. Therefore all beer matches will be "OK" and the distinction won't be relevant
+
+# add more pairings?
+beer_matches = {'red meat': ['Bock Beer', 'Porter Beer', 'Red Ale Beer'],                                 # meat
+                'cured meat': ['Porter Beer', 'Red Ale Beer'],
+                'pork': ['IPA (India Pale Ale) Beer', 'Dubbel Beer', 'Dark Ale Beer'],
+                'poultry': ['Lager / Pilsner Beer'],
+                'mollusk': ['Saison Beer', 'Wheat / Wit / White Beer'],
+                'fish': ['Porter Beer', 'Lager / Pilsner Beer'],
+                'shellfish': ['Saison Beer', 'Wheat / Wit / White Beer'],
+
+                'grilled': ['Bock Beer', 'Porter Beer', 'Smoked Beer', 'Blonde Beer', 'Oktoberfest Beer'  # preparation
+                            'IPA (India Pale Ale) Beer', 'Stout Beer', 'Red Ale Beer'],
+                'fried': ['IPA (India Pale Ale) Beer', 'Dark Lager / Schwarzbier Beer'],
+                'smoked': ['Smoked Beer', 'Porter Beer', 'Stout Beer', 'Pale Ale Beer'],
+                'roasted': ['Bock Beer', 'Lager / Pilsner Beer', 'Porter Beer'],
+                'steamed': ['Lager / Pilsner Beer', 'Wheat / Wit / White Beer'],
+
+                'soft': ['Lager / Pilsner Beer', 'Wheat / Wit / White Beer',                # cheese
+                         'Pale Ale Beer', 'IPA (India Pale Ale) Beer'],
+                'pungent': ['Pale Ale Beer', 'APA (American Pale Ale) Beer', 'IPA (India Pale Ale) Beer',
+                            'Barley Wine Beer', 'Tripel Beer', 'Abbey / Trappist Beer', 'Dubbel Beer'],
+                'hard': ['Stout Beer', 'Porter Beer', 'Bock Beer', 'Dark Ale Beer'],
+
+                'alliums': ['Pale Ale Beer', 'Lager / Pilsner Beer', 'IPA (India Pale Ale) Beer'],        # vegetable
+                'green': ['Lager / Pilsner Beer'],
+                'root': ['Red Ale Beer', 'Alt, Kolsch Beer', 'Blonde Beer'],
+                'nightshades': ['Lager / Pilsner Beer', 'IPA (India Pale Ale) Beer', 'Saison Beer'],
+                'funghi': ['Stout Beer', 'Dark Lager / Schwarzbier Beer'],
+                'nuts': ['Stout Beer', 'Lager / Pilsner Beer', 'IPA (India Pale Ale) Beer'],
+                'beans': ['Wheat / Wit / White Beer'],
+
+                'black pepper': ['Lager / Pilsner Beer'],                                     # spices
+                'red pepper': ['Lager / Pilsner Beer', 'Wheat / Wit / White Beer',
+                               'IPA (India Pale Ale) Beer', 'Bock Beer'],
+                'spicy': ['Lager / Pilsner Beer', 'Wheat / Wit / White Beer', 'Oktoberfest Beer'
+                          'IPA (India Pale Ale) Beer', 'Alt, Kolsch Beer'],
+                'herbs': ['Bock Beer', 'IPA (India Pale Ale) Beer'],
+                'baking spices': ['IPA (India Pale Ale) Beer', 'Blonde Beer', 'Pale Ale Beer'],
+                'exotic': ['Lager / Pilsner Beer'],
+
+                'white starches': ['Lager / Pilsner Beer', 'Blonde Beer', 'Pale Ale Beer'],              # starches
+                'whole wheat': ['Herb / Spice Beer', 'Quadrupel Beer', 'Stout Beer', 'Barley Wine Beer'],
+                'sweet starchy vegetables': [],
+                'potato': ['Lager / Pilsner Beer'],
+
+                'fruit': ['Sour / Lambic Beer', 'Fruit Beer', 'Wheat / Wit / White Beer'],               # sweets
+                'vanilla': ['Barley Wine Beer', 'Sour / Lambic Beer', 'Fruit Beer'],
+                'chocolate': ['Bock Beer', 'Porter Beer', 'Barley Wine Beer', 'Coffee / Chocolate / Honey Beer'],
+                'coffee': ['Coffee / Chocolate / Honey Beer']}

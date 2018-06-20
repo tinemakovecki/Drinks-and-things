@@ -78,7 +78,6 @@ def transform_beer():
         for row in reader:
             ime = row['Name']
             pivovarna = row['Brewery']
-            vrsta = row['Style']
             opis = row['Description']
             drzava = country_dic[row['Country']]
 
@@ -103,6 +102,19 @@ def transform_beer():
                 cena = None
             else:
                 cena = row['Price']
+
+            # vrsta:
+            # some types are doubled, we need to join them together
+            if row['Style'] == 'Cask Aged Beer':
+                vrsta = 'Cask-Aged Beer'
+            elif row['Style'] == 'Spiced Beer':
+                vrsta = 'Herb / Spice Beer'
+            elif row['Style'] == 'Spiced Beer':
+                vrsta = 'Herb / Spice Beer'
+            elif row['Style'] == 'Wheat Beer':
+                vrsta = 'Wheat / Wit / White Beer'
+            else:
+                vrsta = row['Style']
 
             # write a dictionary for each beer
             entry = {'ime': ime,
