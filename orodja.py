@@ -199,7 +199,9 @@ def transform_wine():
     column_names = wines[0].keys()
     zapisi_tabelo(wines, column_names, 'wines.csv')
 
-transform_wine()
+# DO IT:
+# transform_beer()
+# transform_wine()
 
 
 

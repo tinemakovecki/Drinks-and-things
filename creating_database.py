@@ -211,7 +211,7 @@ def beer_upload():
             """, pivce)
 
     connection.commit()
-    print('Upload successful!')
+    print('Beer upload successful!')
     return uploaded_categories
 
 
@@ -259,7 +259,7 @@ def wine_upload():
             """, vince)
 
     connection.commit()
-    print('Upload successful!')
+    print('Wine upload successful!')
     return uploaded_categories
 
 
@@ -269,7 +269,7 @@ wine_ids = wine_upload()
 
 
 # ====================================== #
-# PAIRING
+# PAIRINGs
 # ====================================== #
 
 # ===== WINE ===== #
@@ -317,48 +317,10 @@ matches = {'red meat': medium_red, 'cured meat': bold_red + medium_red + dessert
            'potato': bold_red + medium_red + light_red + rich_white + light_white + sweet_white,
            'fruit': dessert, 'vanilla': sweet_white + dessert, 'chocolate': [], 'coffee': []}               # sweet
 
-
-def food_upload():
-    uploaded_food = {}
-    for food in matches:
-        cur.execute("""INSERT INTO vrste_hrane(ime)
-                        VALUES
-                        (%s)
-                        RETURNING id
-                        """, [food])
-        cat_id, = cur.fetchone()
-        uploaded_food[food] = cat_id
-    connection.commit()
-    print('Upload successful!')
-    return uploaded_food
-
-
-food_ids = food_upload()
-
-
-def pairing_upload():
-    for food in matches:
-        for sort in matches[food]:
-            pair = {'vrsta_pijace': wine_ids[sort], 'vrsta_hrane': food_ids[food], 'is_perfect': '0'}
-            cur.execute("""INSERT INTO priporocila(vrsta_hrane, vrsta_pijace, is_perfect)
-                        VALUES
-                        (%(vrsta_hrane)s, %(vrsta_pijace)s, %(is_perfect)s)
-                        """, pair)
-        for sort in perfect_matches[food]:
-            pair = {'vrsta_pijace': wine_ids[sort], 'vrsta_hrane': food_ids[food], 'is_perfect': '1'}
-            cur.execute("""INSERT INTO priporocila(vrsta_hrane, vrsta_pijace, is_perfect)
-                                    VALUES
-                                    (%(vrsta_hrane)s, %(vrsta_pijace)s, %(is_perfect)s)
-                                    """, pair)
-    connection.commit()
-    print('Upload successful!')
-
-
-pairing_upload()
-
 # ===== BEER ===== #
+
 # note: because of the sources available, wine matches could be split into "perfect" and "OK" categories,
-# but the beer matches can't be. Therefore all beer matches will be "OK" and the distinction won't be relevant
+# but the beer matches can't be. Therefore all beer matches will be "OK" and the distinction won't be relevant.
 
 # add more pairings?
 beer_matches = {'red meat': ['Bock Beer', 'Porter Beer', 'Red Ale Beer'],                                 # meat
@@ -369,7 +331,7 @@ beer_matches = {'red meat': ['Bock Beer', 'Porter Beer', 'Red Ale Beer'],       
                 'fish': ['Porter Beer', 'Lager / Pilsner Beer'],
                 'shellfish': ['Saison Beer', 'Wheat / Wit / White Beer'],
 
-                'grilled': ['Bock Beer', 'Porter Beer', 'Smoked Beer', 'Blonde Beer', 'Oktoberfest Beer'  # preparation
+                'grilled': ['Bock Beer', 'Porter Beer', 'Smoked Beer', 'Blonde Beer', 'Oktoberfest Beer',  # preparation
                             'IPA (India Pale Ale) Beer', 'Stout Beer', 'Red Ale Beer'],
                 'fried': ['IPA (India Pale Ale) Beer', 'Dark Lager / Schwarzbier Beer'],
                 'smoked': ['Smoked Beer', 'Porter Beer', 'Stout Beer', 'Pale Ale Beer'],
@@ -393,7 +355,7 @@ beer_matches = {'red meat': ['Bock Beer', 'Porter Beer', 'Red Ale Beer'],       
                 'black pepper': ['Lager / Pilsner Beer'],                                     # spices
                 'red pepper': ['Lager / Pilsner Beer', 'Wheat / Wit / White Beer',
                                'IPA (India Pale Ale) Beer', 'Bock Beer'],
-                'spicy': ['Lager / Pilsner Beer', 'Wheat / Wit / White Beer', 'Oktoberfest Beer'
+                'spicy': ['Lager / Pilsner Beer', 'Wheat / Wit / White Beer', 'Oktoberfest Beer',
                           'IPA (India Pale Ale) Beer', 'Alt, Kolsch Beer'],
                 'herbs': ['Bock Beer', 'IPA (India Pale Ale) Beer'],
                 'baking spices': ['IPA (India Pale Ale) Beer', 'Blonde Beer', 'Pale Ale Beer'],
@@ -408,3 +370,57 @@ beer_matches = {'red meat': ['Bock Beer', 'Porter Beer', 'Red Ale Beer'],       
                 'vanilla': ['Barley Wine Beer', 'Sour / Lambic Beer', 'Fruit Beer'],
                 'chocolate': ['Bock Beer', 'Porter Beer', 'Barley Wine Beer', 'Coffee / Chocolate / Honey Beer'],
                 'coffee': ['Coffee / Chocolate / Honey Beer']}
+
+# ===== PAIRING UPLOAD ===== #
+
+def food_upload():
+    """ Uploads food types that are going to be matched with drinks """
+    uploaded_food = {}
+    for food in matches:
+        cur.execute("""INSERT INTO vrste_hrane(ime)
+                        VALUES
+                        (%s)
+                        RETURNING id
+                        """, [food])
+        cat_id, = cur.fetchone()
+        uploaded_food[food] = cat_id
+    connection.commit()
+    print('Upload successful!')
+    return uploaded_food
+
+
+food_ids = food_upload()
+
+
+def pairing_upload():
+    """ Uploads food and drink pairings """
+    for food in matches:
+
+        for sort in matches[food]:
+            pair = {'vrsta_pijace': wine_ids[sort], 'vrsta_hrane': food_ids[food], 'is_perfect': '0'}
+            cur.execute("""INSERT INTO priporocila(vrsta_hrane, vrsta_pijace, is_perfect)
+                        VALUES
+                        (%(vrsta_hrane)s, %(vrsta_pijace)s, %(is_perfect)s)
+                        """, pair)
+
+        for sort in perfect_matches[food]:
+            pair = {'vrsta_pijace': wine_ids[sort], 'vrsta_hrane': food_ids[food], 'is_perfect': '1'}
+            cur.execute("""INSERT INTO priporocila(vrsta_hrane, vrsta_pijace, is_perfect)
+                                    VALUES
+                                    (%(vrsta_hrane)s, %(vrsta_pijace)s, %(is_perfect)s)
+                                    """, pair)
+
+        for sort in beer_matches[food]:
+            pair = {'vrsta_pijace': beer_ids[sort], 'vrsta_hrane': food_ids[food], 'is_perfect': '0'}
+            cur.execute("""INSERT INTO priporocila(vrsta_hrane, vrsta_pijace, is_perfect)
+                                    VALUES
+                                    (%(vrsta_hrane)s, %(vrsta_pijace)s, %(is_perfect)s)
+                                    """, pair)
+    connection.commit()
+    print('Pairing upload successful!')
+
+
+pairing_upload()
+
+
+

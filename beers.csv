@@ -164,7 +164,7 @@ Wiper and True Whitefriars;Wiper and True;Winter / Christmas Ale Beer;0.33;6.4;E
 Anchorage Whiteout;Anchorage Brewing;Wheat / Wit / White Beer;0.75;6.5;United States;;A Belgian-style witbier brewed with lemon peel, black peppercorns and coriander and then aged in ex-Chardonnay wine casks!
 Mikkeller American Dream;Mikkeller;Lager / Pilsner Beer;0.5;4.6;Denmark;4.8;A lager from Mikkeler, made using American hops. This one's intended to be drunk from the can after grabbing it from the fridge on a warm day.
 Mikkeller Black Hole;Mikkeller;Stout Beer;0.38;13.1;Denmark;;An intense imperial stout, Black Hole is said to be what Mikkeller is all about\
-Mikkeller Hop On Drink'in Berliner;Mikkeller;Wheat Beer;0.33;2.8;Denmark;3.16;A punchier, dry hopped version of Mikkeler's Drink'in Berliner, a Berliner Weisse.
+Mikkeller Hop On Drink'in Berliner;Mikkeller;Wheat / Wit / White Beer;0.33;2.8;Denmark;3.16;A punchier, dry hopped version of Mikkeler's Drink'in Berliner, a Berliner Weisse.
 Mikkeller Say Sun;Mikkeller;Saison Beer;0.33;6.0;Denmark;;A Belgian Saison Ale from Mikkeller, brewed at D'Proef.
 Mikkeller Belgian Tripel;Mikkeller;Tripel Beer;0.33;9.0;Denmark;;A Tripel style Belgian ale from the wonderful Mikkeller! A tasty treat which has been brewed with coriander and sweet orange zests, resulting in oodles of mouth-filling flavour. Love the label, too!
 Mikkeller USAlive!;Mikkeller;Blonde Beer;0.33;8.0;Denmark;4.0;A strong Belgian-style beer from Mikkeller, made using wild yeasts which brings out a refreshing, juicy sourness to the brew.
@@ -317,7 +317,7 @@ Kasteelbier Tripel;Van Honsebrouck;Tripel Beer;0.33;11.0;Belgium;4.26;This is Br
 Satan Gold;Brouwerij de Block;Pale Ale Beer;0.33;8.0;Belgium;2.65;The devil comes in many forms, forms like Red, and Gold. This is the gold one. A strong Belgian pale ale waiting for you to welcome it into your home.
 Tripel Karmeliet;Brouwerij Bosteels;Blonde Beer;0.33;8.4;Belgium;;An abbey style tripel first released in 1996, based on a 17th century recipe that calls for wheat, oats and barley.
 Hacker-Pschorr Weisse;Hacker-Pschorr;Wheat / Wit / White Beer;0.5;5.5;Germany;2.45;A traditional wheat beer from Hacker-Pschorr, one of the six breweries that supply beer for Munich's Oktoberfest celebrations. A simple but stunning beer from the German brewers.
-Hopf Helle Weisse;Weißbierbrauerei Hopf;Wheat Beer;0.5;5.5;Germany;;A rather tasty German wheat beer, rather classic in style. You'll be getting a lot of fruit and spice from this one. Serve cold on a warm afternoon...
+Hopf Helle Weisse;Weißbierbrauerei Hopf;Wheat / Wit / White Beer;0.5;5.5;Germany;;A rather tasty German wheat beer, rather classic in style. You'll be getting a lot of fruit and spice from this one. Serve cold on a warm afternoon...
 Mongozo Buckwheat White;Mongozo;Wheat / Wit / White Beer;0.33;4.7;Netherlands;2.15;From the Mongozo range, produced in The Netherlands, comes a quite interesting gluten free wheat beer - you see, the Mongozo Buckwheat White is made using buckwheat alongside hops and rice, and is
 Paulaner Hefe-Weißbier Naturtrüb;Paulaner Brauerei;Wheat / Wit / White Beer;0.5;5.5;Germany;2.15;Paulaner Hefe-Weißbier Naturtrüb is one of Germany's most popular wheat beers. The brewery was established back in the 1600s and resides in the beautiful city of Munich.
 Paulaner Hefe-Weißbier Naturtrüb Can;Paulaner Brauerei;Wheat / Wit / White Beer;0.33;5.5;Germany;;One of Germany's favourite Hefe-Weißbier, now available in a can!
@@ -507,14 +507,14 @@ Long Man Brewery Old Man;Long Man Brewery;Dark Ale Beer;0.5;4.3;England;2.86;Ric
 Long Man Brewery American Pale Ale;Long Man Brewery;APA (American Pale Ale) Beer;0.5;4.8;England;3.06;A hop-forward American-style Pale Ale brewed by the Long Man Brewery in beautiful Sussex.
 Whitstable Pilsner;Whitstable Brewery;Lager / Pilsner Beer;0.33;4.9;England;;A Pilsner made with Saaz hops from Whitstable Brewery in Kent.
 Whitstable Oyster Stout;Whitstable Brewery;Stout Beer;0.33;4.5;England;;An Oyster Stout from Whitstable Brewery, perfect enjoyed chilled with oysters as would have been commonplace in the 18th century. (Well, not the chilled bit...
-Whitstable Wheat Beer;Whitstable Brewery;Wheat Beer;0.33;5.2;England;2.0;A spicy wheat beer from Whitstable Brewery near Maidstone in Kent.
+Whitstable Wheat Beer;Whitstable Brewery;Wheat / Wit / White Beer;0.33;5.2;England;2.0;A spicy wheat beer from Whitstable Brewery near Maidstone in Kent.
 Whitstable Raspberry Wheat;Whitstable Brewery;Fruit Beer;0.33;5.2;England;2.0;A cloudy wheat beer made with raspberries at Whitstable Brewery in Kent (the garden of England).
 Whitstable Brewery East India Pale Ale;Whitstable Brewery;IPA (India Pale Ale) Beer;0.5;4.1;England;;A 4.1% abv IPA from Whitstable Brewery in Kent.
 Whitstable Kentish Reserve;Whitstable Brewery;Bitter Beer;0.5;5.0;England;3.6;Kentish Reserve is a premium bitter or ESB from a proud Kentish Brewery.
 Anchor Steam Beer;Anchor Brewing Co.;Lager / Pilsner Beer;0.36;4.8;United States;;The archetypal California Common, having trademarked the name Steam Beer, this modern brew from Anchor is made with lager yeast at temperatures more familiar in ale production.
 Big Hug Brewing Spirit Pale Ale;Big Hug Brewing;APA (American Pale Ale) Beer;0.33;4.2;England;;A session Pale Ale from Big Hug, London brewers with a love of bears (for this brew inspiration has been taken from the amazing spirit bears of British Columbia).
 Bristol Beer Factory Gold;Bristol Beer Factory;Pale Ale Beer;0.5;5.0;England;2.9;Golden ale from Bristol Beer made with Pale, Cara, Crystal and Wheat malts alongside English hops.
-Bristol Beer Factory Hefe;Bristol Beer Factory;Wheat Beer;0.5;4.8;England;2.9;A Hefeweizen-style (south German-style wheat) beer from Bristol, UK! Bristol Beer suggest enjoying this one alongside a salad or mild spicy dishes.
+Bristol Beer Factory Hefe;Bristol Beer Factory;Wheat / Wit / White Beer;0.5;4.8;England;2.9;A Hefeweizen-style (south German-style wheat) beer from Bristol, UK! Bristol Beer suggest enjoying this one alongside a salad or mild spicy dishes.
 Bristol Beer Factory Independence;Bristol Beer Factory;Pale Ale Beer;0.5;4.6;England;;An American-style pale with American hops added throughout the boil. It's also dry hopped, naturally.
 Bristol Beer Factory Milk Stout;Bristol Beer Factory;Stout Beer;0.5;4.5;England;3.22;A milk stout (made with unfermentable lactose sugar for added sweetness) brewed with Chocolate and Black malts as well as Maris Otter and Crystal.
 Bristol Beer Factory Acer;Bristol Beer Factory;Pale Ale Beer;0.5;3.8;England;;A hoppy session ale made with the late addition of Sorachi Ace by Bristol Beer, perfect for the summer.
@@ -541,7 +541,7 @@ Saltaire Cascade Pale Ale;Saltaire;APA (American Pale Ale) Beer;0.5;4.8;England;
 Saltaire Raspberry Blonde;Saltaire;Fruit Beer;0.5;4.0;England;;A raspberry flavoured blonde ale from Saltaire Brewery near Bradford.
 Saltaire Blonde;Saltaire;Blonde Beer;0.5;4.0;England;;A Blonde from Bradford, brewed with Czech and German hops.
 Saltaire Hazelnut Coffee Porter;Saltaire;Coffee / Chocolate / Honey Beer;0.5;4.6;England;;This hazelnut flavoured English Porter is made with coffee and German malts and hops.
-Schneider Weisse Original;Schneider Weisse;Wheat Beer;0.5;5.4;Germany;3.0;Founded by Georg Schneider in 1872, the Bavarian brewing company is still in the hands of his descendants, producing classic wheat beer.
+Schneider Weisse Original;Schneider Weisse;Wheat / Wit / White Beer;0.5;5.4;Germany;3.0;Founded by Georg Schneider in 1872, the Bavarian brewing company is still in the hands of his descendants, producing classic wheat beer.
 Veltins Pilsener;Brauerei C. & A. Veltins;Lager / Pilsner Beer;0.5;4.8;Germany;;Classic German Pilsener from Meschede-Grevenstein made with natural mountain spring water.
 Wild Beer Wild Goose Chase;The Wild Beer Co;Fruit Beer;0.33;4.5;England;;Named after the fact that this was a much more difficult beer to create than was initially anticipated, Wild Goose Chase in Wild Beer's tart, fruity, well hopped any-time-of-beer par excellence.
 Wild Beer Epic Saison;The Wild Beer Co;Saison Beer;0.33;5.0;England;2.6;A Belgian-style farmhouse ale made with American Sorachi Ace in the West Country!
@@ -600,7 +600,7 @@ Summer Wine Oregon West Coast Pale Ale;Summer Wine;APA (American Pale Ale) Beer;
 Summer Wine Brewing Sabertooth IPA;Summer Wine;IPA (India Pale Ale) Beer;0.33;6.9;England;;The Summer Wine Brewery's Sabertooth IPA has come roaring into Mom Towers! Made with Summit and Columbus hops, this is ready to pounce with hoppy goodness, joined by a hint of malt on the tail.
 Tuatara Solstice 2015 Tribute;Tuatara;Saison Beer;0.33;5.2;New Zealand;;A Spiced Saison in celebration of the Solstice! This intriguing tipple comes from the Tuatara Brewery in New Zealand, and has been brewed with ginger and Kaffir lime leaves.
 Wild Beer The Blend Summer 2015;The Wild Beer Co;Sour / Lambic Beer;0.75;4.7;England;;The Blend Summer from Somerset's Wild Beer Co. is a interesting blend of a bunch of different cask-aged sour beers, including some barrels from their first ever sour brew!
-Wild Beer Modus Operandi;The Wild Beer Co;Cask Aged Beer;0.33;7.0;England;;A gloriously rich wild yeast beer from the Wild Beer Co. in Somerset. Named Modus Operandi, this does somewhat encapsulate a big part of what the brewers do - make some cracking wild beers!
+Wild Beer Modus Operandi;The Wild Beer Co;Cask-Aged Beer;0.33;7.0;England;;A gloriously rich wild yeast beer from the Wild Beer Co. in Somerset. Named Modus Operandi, this does somewhat encapsulate a big part of what the brewers do - make some cracking wild beers!
 Wild Beer Shnoodlepip 2015;The Wild Beer Co;Fruit Beer;0.33;6.5;England;;Shnoodlepip is the incredibly enjoyable to pronounce collaboration between the Wild beer Co., Good George Beer's Kelly Ryan and Burning Sky Brewery's Mark Tranter.
 Wild Beer The Blend - Winter 2015 (Beyond Modus II);The Wild Beer Co;Sour / Lambic Beer;0.75;6.0;England;;This winter treat from the Wild Beer Co. in Somerset is based around a vintage barrel of their Modus Operandi wild yeast beer, though the blend itself is much richer and darker than before...
 Wild Beer III;The Wild Beer Co;Barley Wine Beer;0.33;9.0;England;;A juicy, sweet barley wine from the Wild Beer Co. in Somerset, packed to the brim of fruity deliciousness.
@@ -960,7 +960,7 @@ Howling Hops IPA New England Special;Howling Hops Brewery;IPA (India Pale Ale) B
 Anchor Steam Beer Dry Hopped;Anchor Brewing Co.;Lager / Pilsner Beer;0.36;5.4;United States;2.84;Anchor Steam Beer is one of the most well known American craft beers around.
 Brooklyn Summer Ale Can;Brooklyn Brewery;Pale Ale Beer;0.36;5.0;United States;2.8;A refreshing pale ale all the way from Brooklyn, made with a quartet of popular hops including Cascade, Amarillo, Ahtanum and Willamette.
 Flying Dog Summer Rental Radler;Flying Dog Brewery;Lager / Pilsner Beer;0.36;4.5;United States;2.86;A easy-drinking beer from Flying Dog, based around a lager recipe and brewed with grapefruit and passion fruit.
-Hitachino Nest Ginger Ale;Kiuchi Brewery;Spiced Beer;0.33;8.0;Japan;4.4;A refreshing, zesty Ginger Ale from Japan's Hitachino Nest range.
+Hitachino Nest Ginger Ale;Kiuchi Brewery;Herb / Spice Beer;0.33;8.0;Japan;4.4;A refreshing, zesty Ginger Ale from Japan's Hitachino Nest range.
 Weird Beard Sour Rangers;Weird Beard Brew Company;Wheat / Wit / White Beer;0.33;2.6;England;2.84;There's plenty to love about Weird Beard Sour Rangers, so we've made a little list to make things a bit simpler.\r\n1. It's a terrifically tart apricot Berliner Weisse style brew.\r\n2.
 Beavertown Tempus Project Barrel Aged Applelation;Beavertown;Cask-Aged Beer;0.38;10.0;England;11.02;A barrel-aged edition of Beavertown's Applelation Bramley Apple Saison, released for their very exciting Tempus range.
 Gipsy Hill Ranger Pale Ale;Gipsy Hill Brewing Company;Pale Ale Beer;0.33;3.6;England;2.84;From south east London's Gipsy Hill Brewing Company comes their Ranger Park Pale Ale - the perfect treat for enjoying during a sunny picnic.
