@@ -217,8 +217,11 @@ def beer_upload():
 
 def wine_upload():
     """ Uploads data from the wine file into the database. """
-    # we'll keep a dictionary of uploaded categories and their ids
+    # we'll keep a dictionary of uploaded info and their ids,
+    # so we can correctly connect the tables when needed
     uploaded_categories = {}
+    uploaded_smells = {}
+    uploaded_tastes = {}
 
     with open('wines.csv', encoding='utf-8') as file:
         read = csv.DictReader(file, delimiter=';')
@@ -233,7 +236,7 @@ def wine_upload():
                 RETURNING id
                 """, [entry['vrsta']])
                 cat_id, = cur.fetchone()  # save the id to insert it into 'pijaca' table
-                #connection.commit()
+                # connection.commit()
                 uploaded_categories[entry['vrsta']] = cat_id
 
             # table pijaca
@@ -258,6 +261,59 @@ def wine_upload():
             (%(id)s, %(barva)s, %(regija)s)
             """, vince)
 
+            # adding smells
+            smell_string = entry['vonj']
+            # we have to parse the string of smells
+            smell_string = smell_string.strip(""" "'""")
+            smell_list = smell_string.split(',')
+            smell_list = smell_list[:-1] + smell_list[-1].split(' and ')
+            smells = []
+            for element in smell_list:
+                smells.append(element.strip())
+
+            for smell in smells:
+                if smell not in uploaded_smells:
+                    cur.execute("""INSERT INTO aroma(ime)
+                    VALUES
+                    (%s)
+                    RETURNING id
+                    """, [smell])
+                    aroma_id, = cur.fetchone()  # save the id to insert it into other tables
+                    uploaded_smells[smell] = aroma_id
+
+                # connect the wine to its aroma
+                cur.execute("""INSERT INTO ima_vonj(aroma, vino)
+                VALUES
+                (%(aroma)s, %(vino)s)
+                """, {'aroma': uploaded_smells[smell], 'vino': return_id})
+
+            # adding taste
+            taste_string = entry['okus']
+            # we have to parse the string of tastes
+            taste_string = taste_string.strip(""" "'""")
+            taste_list = taste_string.split(',')
+            taste_list = taste_list[:-1] + taste_list[-1].split(' and ')
+            tastes = []
+            for element in taste_list:
+                tastes.append(element.strip())
+
+            for taste in tastes:
+                if taste != "":
+                    if taste not in uploaded_tastes:
+                        cur.execute("""INSERT INTO okusi(ime)
+                        VALUES
+                        (%s)
+                        RETURNING id
+                        """, [taste])
+                        taste_id, = cur.fetchone()  # save the id to insert it into other tables
+                        uploaded_tastes[taste] = taste_id
+
+                    # connect the wine to its taste
+                    cur.execute("""INSERT INTO ima_okus(okus, vino)
+                    VALUES
+                    (%(okus)s, %(vino)s)
+                    """, {'okus': uploaded_tastes[taste], 'vino': return_id})
+
     connection.commit()
     print('Wine upload successful!')
     return uploaded_categories
@@ -269,7 +325,7 @@ wine_ids = wine_upload()
 
 
 # ====================================== #
-# PAIRINGs
+# PAIRINGS
 # ====================================== #
 
 # ===== WINE ===== #

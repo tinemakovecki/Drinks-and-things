@@ -154,6 +154,8 @@ def transform_wine():
             regija = row['Region']
             # TODO: filter the descriptions for nonsense!
             opis = row['Description']
+            okus = row['Taste']
+            vonj = row['Smell']
 
             # velikost:
             velikost = ""
@@ -193,6 +195,8 @@ def transform_wine():
                      'drzava': drzava,
                      'regija': regija,
                      'cena': cena,
+                     'okus': okus,
+                     'vonj': vonj,
                      'opis': opis}
             wines.append(entry)
 
@@ -200,8 +204,8 @@ def transform_wine():
     zapisi_tabelo(wines, column_names, 'wines.csv')
 
 # DO IT:
-# transform_beer()
-# transform_wine()
+transform_beer()
+transform_wine()
 
 
 
