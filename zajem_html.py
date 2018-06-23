@@ -149,7 +149,7 @@ def izloci_podatke_vin(imenik, regex):
 
 
 def izloci_podatke_piv(imenik, regex):
-    '''Iz html datotek izloči podatke vin'''
+    '''Iz html datotek izloči podatke piv'''
     podatki = []
     for datoteka in orodja.datoteke(imenik):
         pivo = re.search(regex, orodja.vsebina_datoteke(datoteka))
@@ -180,5 +180,62 @@ def csv_piva():
     orodja.zapisi_tabelo(piva, ['id', 'Name', 'Country', 'Brewery', 'Bottler', 'Style', 'Price', 'Volume', 'ABV',
                                 'Description'], 'CSV/piva.csv')
 
-csv_piva()
+
+regex_slika_pivo = re.compile(
+    r'<div class="productImageWrap">.*?'
+    r'<img src="(?P<Image>.*?)".*?'
+    r'var isProductPage = true,.*?lastViewedProductID = \d{4,8},.*?productID = (?P<id>\d{4,8});.*?',
+    flags=re.DOTALL)
+
+regex_slika_vino = re.compile(
+    r'title="Show (bottle|front) graphic for this product." data-index="0" href="(?P<Image>.*?)"><img src=.*?'
+    r'<td class=\'label\'>Item #</td>.*?'
+    r'<td class=\'data\'>(?P<id>\d{4,8})</td>.*?',
+    flags=re.DOTALL)
+
+
+def izloci_slike_piv(imenik, regex):
+    '''Iz html datotek izloči slike piv'''
+    slike = []
+    for datoteka in orodja.datoteke(imenik):
+        pivo = re.search(regex, orodja.vsebina_datoteke(datoteka))
+        if pivo is not None:
+            pod = pivo.groupdict()
+            pod['id'] = int(pod['id'])
+            slike.append(pod)
+        else:
+            print(datoteka)
+    return slike
+
+
+def izloci_slike_vin(imenik, regex):
+    '''Iz html datotek izloči slike vin'''
+    slike = []
+    for datoteka in orodja.datoteke(imenik):
+        vino = re.search(regex, orodja.vsebina_datoteke(datoteka))
+        if vino is not None:
+            pod = vino.groupdict()
+            pod['id'] = int(pod['id'])
+            slike.append(pod)
+        else:
+            print(datoteka)
+    return slike
+
+
+def csv_slike_vina():
+    '''Url-je slik vin zapiše v csv datoteko'''
+    vina = izloci_slike_vin('vina', regex_slika_vino)
+    orodja.zapisi_tabelo(vina, ['id', 'Image'], 'CSV_slike/slike_vina.csv')
+
+
+def csv_slike_piva():
+    '''Url-je slik piv zapiše v csv datoteko'''
+    piva = izloci_slike_piv('beer', regex_slika_pivo)
+    orodja.zapisi_tabelo(piva, ['id', 'Image'], 'CSV_slike/slike_piva.csv')
+
+
+csv_slike_piva()
+csv_slike_vina()
+
+
 

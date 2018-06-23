@@ -1,7 +1,7 @@
 import csv
 import os
 import sys
-# import requests
+import requests
 
 def pripravi_imenik(ime_datoteke):
     '''ce se ne obstaja, pripravi prazen imenik za dano datoteko.'''
