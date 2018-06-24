@@ -106,7 +106,8 @@ pijaca = """    id SERIAL PRIMARY KEY,
     stopnja_alkohola NUMERIC,
     vrsta INTEGER REFERENCES vrste_pijace(id),
     cena NUMERIC,
-    opis TEXT
+    opis TEXT,
+    slika TEXT
 """
 
 pivo = """    id INTEGER REFERENCES pijaca(id),
@@ -196,9 +197,9 @@ def beer_upload():
             entry['vrsta'] = uploaded_categories[entry['vrsta']]
 
             cur.execute("""INSERT INTO
-                pijaca(ime, vrsta, velikost, stopnja_alkohola, drzava, cena, opis)
+                pijaca(ime, vrsta, velikost, stopnja_alkohola, drzava, cena, opis, slika)
             VALUES
-                (%(ime)s, %(vrsta)s, %(velikost)s, %(stopnja_alkohola)s, %(drzava)s, %(cena)s, %(opis)s)
+                (%(ime)s, %(vrsta)s, %(velikost)s, %(stopnja_alkohola)s, %(drzava)s, %(cena)s, %(opis)s, %(slika)s)
             RETURNING id
             """, entry)
             return_id, = cur.fetchone()
@@ -247,9 +248,9 @@ def wine_upload():
             entry['vrsta'] = uploaded_categories[entry['vrsta']]
 
             cur.execute("""INSERT INTO
-                pijaca(ime, vrsta, velikost, stopnja_alkohola, drzava, cena, opis)
+                pijaca(ime, vrsta, velikost, stopnja_alkohola, drzava, cena, opis, slika)
             VALUES
-                (%(ime)s, %(vrsta)s, %(velikost)s, %(stopnja_alkohola)s, %(drzava)s, %(cena)s, %(opis)s)
+                (%(ime)s, %(vrsta)s, %(velikost)s, %(stopnja_alkohola)s, %(drzava)s, %(cena)s, %(opis)s, %(slika)s)
             RETURNING id
             """, entry)
             return_id, = cur.fetchone()
@@ -477,6 +478,5 @@ def pairing_upload():
 
 
 pairing_upload()
-
 
 
