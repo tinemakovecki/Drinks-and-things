@@ -81,6 +81,7 @@ def zajemi_piva():
 regex_vino = re.compile(
     r'<h1 itemprop=\'name\'.*?title">(?P<Name>.*?)((\$|&).*)?<small>(?P<ShortDes>.*?)</small></h1>.*?'
     r'<span itemprop=\'price\'>(?P<Price>.*?)</span>.*?'
+    r'title="Show (bottle|front) graphic for this product." data-index="0" href="(?P<Image>.*?)"><img src=.*?'
     r'<p itemprop=\'(description|reviewBody(?!(.*?itemprop=\'description)))\'>"?(?P<Description>.*?)"?(</p>|<br>).*?'
     r'<td class=\'label\'>Item #</td>.*?'
     r'<td class=\'data\'>(?P<id>\d{4,8})</td>.*?'
@@ -107,6 +108,8 @@ regex_vrsta = re.compile(r'>(?P<vrsta>.*?)</a>')
 
 
 regex_pivo = re.compile(
+    r'<div class="productImageWrap">.*?'
+    r'<img src="(?P<Image>.*?)".*?'
     r'(<meta itemprop=\'price\' content=\'(?P<Price>.*?)\'/>|Discontinued).*?'
     r'<span id="ContentPlaceHolder1_ctl00_ctl00_wdItemNameCountry" class="kv-key gold">Country</span>.*?'
     r'<span class="kv-val">(?P<Country>.*?)</span>.*?'
@@ -171,71 +174,137 @@ def izloci_podatke_piv(imenik, regex):
 def csv_vina():
     '''Podatke vin zapiše v csv datoteko'''
     vina = izloci_podatke_vin('vina', regex_vino)
-    orodja.zapisi_tabelo(vina, ['id', 'Name', 'ShortDes', 'Color', 'Varietal', 'Price', 'Size', 'ABV', 'Country',
-                                'Region', 'Closure', 'Taste', 'Smell', 'Description'], 'CSV/vina.csv')
+    wines = []
+    for vino in vina:
+        ime = vino['Name']
+        barva = vino['Color']
+        cena = vino['Price']
+        stopnja_alkohola = vino['ABV']
+        drzava = vino['Country']
+        regija = vino['Region']
+        # TODO: filter the descriptions for nonsense!
+        opis = vino['Description']
+        okus = vino['Taste']
+        vonj = vino['Smell']
+        slika = vino['Image']
+
+        # velikost:
+        velikost = ""
+
+        if "mL" in str(vino['Size']):
+            for sign in str(vino['Size']):
+                if sign not in " mL":
+                    velikost += sign
+            velikost = float(velikost) / 1000
+        else:
+            for sign in str(vino['Size']):
+                if sign != "l":
+                    velikost += sign
+            velikost = float(velikost)
+
+        # vrsta:
+        # parsing the strings
+        sorts = vino['Varietal']
+        if len(sorts) == 1:
+            vrsta = sorts[0]
+        else:
+            vrsta = 'blend'
+
+        # write a dictionary for each wine
+        entry = {'ime': ime,
+                 'vrsta': vrsta,
+                 'barva': barva,
+                 'velikost': velikost,
+                 'stopnja_alkohola': stopnja_alkohola,
+                 'drzava': drzava,
+                 'regija': regija,
+                 'cena': cena,
+                 'okus': okus,
+                 'vonj': vonj,
+                 'opis': opis,
+                 'slika': slika}
+        wines.append(entry)
+    column_names = wines[0].keys()
+    orodja.zapisi_tabelo(wines, column_names, 'wines.csv')
 
 
 def csv_piva():
     piva = izloci_podatke_piv('beer', regex_pivo)
-    orodja.zapisi_tabelo(piva, ['id', 'Name', 'Country', 'Brewery', 'Bottler', 'Style', 'Price', 'Volume', 'ABV',
-                                'Description'], 'CSV/piva.csv')
+    beers = []
+    country_dic = {'Scotch Beer': 'Scotland',
+                   'English Beer': 'England',
+                   'Belgian Beer': 'Belgium',
+                   'American Beer': 'United States',
+                   'Japanese Beer': 'Japan',
+                   'Dutch Beer': 'Netherlands',
+                   'Danish Beer': 'Denmark',
+                   'Kiwi Beer': 'New Zealand',
+                   'Australian Beer': 'Australia',
+                   'German Beer': 'Germany',
+                   'Icelandic Beer': 'Iceland'}
+    for pivo in piva:
+        ime = pivo['Name']
+        pivovarna = pivo['Brewery']
+        opis = pivo['Description']
+        drzava = country_dic[pivo['Country']]
+        slika = pivo['Image']
 
+        # velikost:
+        velikost = ""
+        for sign in str(pivo['Volume']):
+            if sign not in "cl":
+                velikost += sign
+        velikost = float(velikost) / 100
 
-regex_slika_pivo = re.compile(
-    r'<div class="productImageWrap">.*?'
-    r'<img src="(?P<Image>.*?)".*?'
-    r'var isProductPage = true,.*?lastViewedProductID = \d{4,8},.*?productID = (?P<id>\d{4,8});.*?',
-    flags=re.DOTALL)
+        # stopnja_alkohola:
+        stopnja_alkohola = ""
+        for sign in str(pivo['ABV']):
+            if sign == ',':
+                stopnja_alkohola += '.'
+            else:
+                stopnja_alkohola += sign
+        stopnja_alkohola = float(stopnja_alkohola)
 
-regex_slika_vino = re.compile(
-    r'title="Show (bottle|front) graphic for this product." data-index="0" href="(?P<Image>.*?)"><img src=.*?'
-    r'<td class=\'label\'>Item #</td>.*?'
-    r'<td class=\'data\'>(?P<id>\d{4,8})</td>.*?',
-    flags=re.DOTALL)
-
-
-def izloci_slike_piv(imenik, regex):
-    '''Iz html datotek izloči slike piv'''
-    slike = []
-    for datoteka in orodja.datoteke(imenik):
-        pivo = re.search(regex, orodja.vsebina_datoteke(datoteka))
-        if pivo is not None:
-            pod = pivo.groupdict()
-            pod['id'] = int(pod['id'])
-            slike.append(pod)
+        # cena:
+        if pivo['Price'] == 'Discontinued':
+            cena = None
         else:
-            print(datoteka)
-    return slike
+            cena = pivo['Price']
 
-
-def izloci_slike_vin(imenik, regex):
-    '''Iz html datotek izloči slike vin'''
-    slike = []
-    for datoteka in orodja.datoteke(imenik):
-        vino = re.search(regex, orodja.vsebina_datoteke(datoteka))
-        if vino is not None:
-            pod = vino.groupdict()
-            pod['id'] = int(pod['id'])
-            slike.append(pod)
+        # vrsta:
+        # some types are doubled, we need to join them together
+        if pivo['Style'] == 'Cask Aged Beer':
+            vrsta = 'Cask-Aged Beer'
+        elif pivo['Style'] == 'Spiced Beer':
+            vrsta = 'Herb / Spice Beer'
+        elif pivo['Style'] == 'Spiced Beer':
+            vrsta = 'Herb / Spice Beer'
+        elif pivo['Style'] == 'Wheat Beer':
+            vrsta = 'Wheat / Wit / White Beer'
         else:
-            print(datoteka)
-    return slike
+            vrsta = pivo['Style']
+
+        # write a dictionary for each beer
+        entry = {'ime': ime,
+                 'pivovarna': pivovarna,
+                 'vrsta': vrsta,
+                 'velikost': velikost,
+                 'stopnja_alkohola': stopnja_alkohola,
+                 'drzava': drzava,
+                 'cena': cena,
+                 'opis': opis,
+                 'slika': slika}
+        beers.append(entry)
 
 
-def csv_slike_vina():
-    '''Url-je slik vin zapiše v csv datoteko'''
-    vina = izloci_slike_vin('vina', regex_slika_vino)
-    orodja.zapisi_tabelo(vina, ['id', 'Image'], 'CSV_slike/slike_vina.csv')
+    column_names = ['ime', 'pivovarna', 'vrsta', 'velikost',
+                'stopnja_alkohola', 'drzava', 'cena', 'opis', 'slika']
+
+    # write a new file with the adjusted data
+    orodja.zapisi_tabelo(beers, column_names, 'beers.csv')
 
 
-def csv_slike_piva():
-    '''Url-je slik piv zapiše v csv datoteko'''
-    piva = izloci_slike_piv('beer', regex_slika_pivo)
-    orodja.zapisi_tabelo(piva, ['id', 'Image'], 'CSV_slike/slike_piva.csv')
-
-
-csv_slike_piva()
-csv_slike_vina()
-
+csv_piva()
+csv_vina()
 
 
