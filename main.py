@@ -18,18 +18,19 @@ def index():
 def search_drinks_post():
     # this is actually just a test
 
-    ime = request.forms.ime
-    drzava = request.forms.drzava
+    meat = request.forms.meat
+    starch = request.forms.starch
+    nuts = request.forms.nuts
+    beans = request.forms.beans
+    green = request.forms.green
 
-    print(ime + " ; " + drzava)
-
-    vrsta = request.forms.vrsta_menu
-
-    print(vrsta)
-
-    check = request.forms.check1
-
-    print(check)
+    if green:
+        print('fuck')
+    print(meat)
+    print(starch)
+    print(nuts)
+    print(beans)
+    print(green)
 
     redirect("/")
 

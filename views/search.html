@@ -1,31 +1,248 @@
 %rebase('osnova.html')
-	
+    
 <!-- search form -->
 <form action="/search_drinks" method="POST">
-  <p>Ime pijače: <input type="text" name="ime"></p>
-  <p>Država: <input type="text" name="drzava"></p>
-  
-  <!-- drop-down menu test -->
-  <select class="custom-select" name="vrsta_menu">
-	<option selected>Drink type</option>
-	<option value="beer">beer</option>
-	<option value="wine">wine</option>
-	<option value="both">both</option>
-  </select>
-  
-  <!-- checkbox test -->
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" value="nekej nekej" name="check1">
-	<label class="form-check-label" for="defaultCheck1">
-	  checkbox 1
-	</label>
-  </div>
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" value="1" name="check2">
-    <label class="form-check-label" for="defaultCheck2">
-	  checkbox 2
-    </label>
-  </div>
 
+  <h2>Iskalni obrazec</h2>
+  
+  <!---------------------------------------->
+  <!-- FOOD OPTIONS -->
+  <!---------------------------------------->
+  <div class="card">
+    <div class="card-body">
+	
+	  <h2 class="card-title">Vrsta obroka</h2>
+      <p class="card-text">Izberite možnosti, ki ustrezajo vašemu obroku:</p>
+	  
+	  
+      <!-- ONE OPTION CHOICES -->
+	  
+      <div class="row">
+	    <div class="col"><b>Meat type:</b></div>
+	    <div class="col"><b>Preparation:</b></div>
+	    <div class="col"><b>Starch type:</b></div>
+	  </div>
+	  
+	  <div class="row">
+	    <div class="col">
+          <!-- meat select -->
+		  <select class="custom-select" name="meat">
+			<option selected>meat type</option>
+			<option value="red meat">red meat</option>
+			<option value="cured meat">cured meat</option>
+			<option value="pork">pork</option>
+			<option value="poultry">poultry</option>
+			<option value="mollusk">mollusk</option>
+			<option value="fish">fish</option>
+			<option value="shellfish">shellfish</option>
+		  </select>
+		</div>
+		
+		<div class="col">
+		  <!-- preparation -->
+		  <select class="custom-select" name="prep">
+			<option selected>kind of preparation</option>
+			<option value="grilled">grilled</option>
+			<option value="fried">fried</option>
+			<option value="roasted">roasted</option>
+			<option value="smoked">smoked</option>
+			<option value="steamed">steamed</option>
+		  </select>
+		</div>
+		  
+		<div class="col">
+		  <!-- starches -->
+		  <select class="custom-select" name="starch">
+			<option selected>starch type</option>
+			<option value="white starch">white starch</option>
+			<option value="whole wheat">whole wheat</option>
+			<option value="sweet starchy vegetable">sweet starchy vegetables</option>
+			<option value="white starch">potato</option>
+		  </select>
+		</div>
+	  </div>
+      
+      
+      <!-- CHECK LISTS -->
+	  
+      <div class="row">
+	  
+	    <!-- Vegetables -->
+	    <div class="col">
+		  <div class="card">
+			<div class="card-body">
+			  
+			  <h4 class="card-title">Vegetables</h4>
+			  <!-- TODO: present alliums and nightshades using normal words -->
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="alliums" name="alliums">
+				<label class="form-check-label" for="alliums">
+				  Alliums
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="green" name="green">
+				<label class="form-check-label" for="green">
+				  Green vegetables
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="funghi" name="mushrooms">
+				<label class="form-check-label" for="mushrooms">
+				  Mushrooms
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="beans" name="beans">
+				<label class="form-check-label" for="beans">
+				  Beans
+				</label>
+			  </div>
+			  <div class="form-check">
+				<!-- TEST: IS VALUE NEEDED-->
+				<input class="form-check-input" type="checkbox" value="nuts" name="nuts">
+				<label class="form-check-label" for="nuts">
+				  Nuts
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="nightshades" name="nightshades">
+				<label class="form-check-label" for="beans">
+				  Nightshades
+				</label>
+			  </div>
+			</div>
+		  </div>
+		</div>
+
+		<!-- Spices -->
+		<div class="col">
+		  <div class="card">
+			<div class="card-body">
+			  
+			  <h4 class="card-title">Spices</h4>
+
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="spicy" name="spicy">
+				<label class="form-check-label" for="spicy">
+				  Spicy
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="herbs" name="herbs">
+				<label class="form-check-label" for="herbs">
+				  Herbs
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="black pepper" name="black_pepper">
+				<label class="form-check-label" for="black_pepper">
+				  Black pepper
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="red pepper" name="red_pepper">
+				<label class="form-check-label" for="red_pepper">
+				  Red pepper
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="baking spices" name="baking">
+				<label class="form-check-label" for="baking">
+				  Baking spices
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="exotic" name="exotic">
+				<label class="form-check-label" for="exotic">
+				  Exotic spices
+				</label>
+			  </div>
+			</div>
+		  </div>
+		</div>
+		
+		<!-- Cheese -->
+		<div class="col">
+		  <div class="card">
+			<div class="card-body">
+			  
+			  <h4 class="card-title">Cheese</h4>
+
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="soft" name="soft">
+				<label class="form-check-label" for="soft">
+				  Soft cheese
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="hard" name="hard">
+				<label class="form-check-label" for="hard">
+				  Hard cheese
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="pungent" name="pungent">
+				<label class="form-check-label" for="pungent">
+				  Pungent cheese
+				</label>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  </div>
+		
+	  <div class="row">
+	  
+		<!-- Sweets -->
+		<div class="col">
+		  <div class="card">
+			<div class="card-body">
+			  
+			  <h4 class="card-title">Sweets</h4>
+
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="fruit" name="fruit">
+				<label class="form-check-label" for="fruit">
+				  Fruit
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="vanilla" name="vanilla">
+				<label class="form-check-label" for="vanilla">
+				  Vanilla
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="chocolate" name="chocolate">
+				<label class="form-check-label" for="chocolate">
+				  Chocolate
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="coffee" name="coffee">
+				<label class="form-check-label" for="coffee">
+				  Coffee
+				</label>
+			  </div>
+			</div>
+		  </div>
+		</div>
+		
+		<!-- empty columns for spacing -->
+		<div class="col"></div>
+		<div class="col"></div>
+	  </div>
+	  
+    </div>
+  </div>
+  
+
+  <!---------------------------------------->
+  <!-- DRINK OPTIONS -->
+  <!---------------------------------------->
+  
+  <!-- TODO! -->
+  
   <p><input type="submit" value="Išči"></p>
 </form>
