@@ -17,12 +17,19 @@ def index():
 @post('/search_drinks')
 def search_drinks_post():
     # this is actually just a test
-    
+
     ime = request.forms.ime
-    vrsta = request.forms.vrsta
     drzava = request.forms.drzava
 
-    print(vrsta + " ; " + ime + " ; " + drzava)
+    print(ime + " ; " + drzava)
+
+    vrsta = request.forms.vrsta_menu
+
+    print(vrsta)
+
+    check = request.forms.check1
+
+    print(check)
 
     redirect("/")
 

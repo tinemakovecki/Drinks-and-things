@@ -1,9 +1,31 @@
-    %rebase('osnova.html')
+%rebase('osnova.html')
 	
-	<!-- data input test -->
-    <form action="/search_drinks" method="POST">
-      <p>Ime pijače: <input type="text" name="ime"></p>
-      <p>Vrsta pijače: <input type="text" name="vrsta"></p>
-	  <p>Država: <input type="text" name="drzava"></p>
-      <p><input type="submit" value="Išči"></p>
-    </form>
+<!-- search form -->
+<form action="/search_drinks" method="POST">
+  <p>Ime pijače: <input type="text" name="ime"></p>
+  <p>Država: <input type="text" name="drzava"></p>
+  
+  <!-- drop-down menu test -->
+  <select class="custom-select" name="vrsta_menu">
+	<option selected>Drink type</option>
+	<option value="beer">beer</option>
+	<option value="wine">wine</option>
+	<option value="both">both</option>
+  </select>
+  
+  <!-- checkbox test -->
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="nekej nekej" name="check1">
+	<label class="form-check-label" for="defaultCheck1">
+	  checkbox 1
+	</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="1" name="check2">
+    <label class="form-check-label" for="defaultCheck2">
+	  checkbox 2
+    </label>
+  </div>
+
+  <p><input type="submit" value="Išči"></p>
+</form>
