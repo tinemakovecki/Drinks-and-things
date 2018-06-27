@@ -1,9 +1,6 @@
 #!/usr/bin/python
 # -*- encoding: utf-8 -*-
 
-# Preprost primer uporabe bottle, v katerem hranimo telefonski imenik
-# v podatkovni bazi.
-
 from bottle import *
 
 # uncomment if you want to see error reports
@@ -16,6 +13,27 @@ def index():
 @get('/besedilo')
 def index():
     return "Sporočilo iz strežnika"
+
+@get('/id')
+def index():
+    return """<thead>
+        <tr>
+            <th>Drink name</th>
+            <th>drink type</th>
+            <th>country</th>
+            <th>size</th>
+            <th>price</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>f</td>
+            <td>fe</td>
+            <td>fec</td>
+            <td>feck</td>
+            <td>test</td>
+        </tr>
+    </tbody>"""
 
 ######################################################################
 # Glavni program
