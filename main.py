@@ -8,35 +8,27 @@ from bottle import *
 
 @get('/')
 def index():
-    return template('osnova.html')
+    return template('drinks.html')
 
-@get('/besedilo')
+@get('/search')
 def index():
-    return "Sporočilo iz strežnika"
+    return template('search.html')
 
-@get('/id')
-def index():
-    return """<thead>
-        <tr>
-            <th>Drink name</th>
-            <th>drink type</th>
-            <th>country</th>
-            <th>size</th>
-            <th>price</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>f</td>
-            <td>fe</td>
-            <td>fec</td>
-            <td>feck</td>
-            <td>test</td>
-        </tr>
-    </tbody>"""
+@post('/search_drinks')
+def search_drinks_post():
+    # this is actually just a test
+    
+    ime = request.forms.ime
+    vrsta = request.forms.vrsta
+    drzava = request.forms.drzava
 
-######################################################################
-# Glavni program
+    print(vrsta + " ; " + ime + " ; " + drzava)
 
-# poženemo strežnik na portu 8080, glej http://localhost:8080/
+    redirect("/")
+
+# ====================================== #
+# MAIN PROGRAM
+# ====================================== #
+
+# we run the server on port 8080, access at: http://localhost:8080/
 run(host='localhost', port=8080, reloader=True)

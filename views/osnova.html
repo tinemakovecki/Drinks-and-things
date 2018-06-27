@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -9,91 +10,22 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
     <title>Drinks and things</title>
-<script>
-
-<!-- TRANSFORMATION FUNCTIONS -->
-
-function nalozi() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-     document.getElementById("besedilo").innerHTML = this.responseText;
-    }
-  };
-  xhttp.open("GET", "besedilo", true);
-  xhttp.send();
-}
-
-function nalozi2() {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-     document.getElementById("table drink").innerHTML = this.responseText;
-    }
-  };
-  xhttp.open("GET", "id", true);
-  xhttp.send();
-}
-</script>
-
   </head>
   
   <body>
     <h1>Drinks and things</h1>
-	
-	<div class="jumbotron">
-		<h1>WORK IN PROGRESS</h1> 
-		<p>This page is under construction...</p> 
-	</div>
-
-    <button type="button" onclick="nalozi()" class="btn btn-primary">Primary</button>
-	
-	<button type="button" onclick="nalozi2()" class="btn btn-primary">my test</button>
-	
+    
+    <div class="jumbotron">
+        <h1>WORK IN PROGRESS</h1> 
+        <p>This page is under construction...</p> 
+    </div>
+    
     <span id="besedilo">Tukaj rabimo še miljon drugih stvari in tole je mal shit.</span>
 	
-	<!-- SEARCH RESULT TABLE -->
-	<!-- todo: separate file + rebase -->
+	<!-- base  -->
 	
-	<div class="container">
-	  <h2>Results test</h2>
-	  <p>This is going to be a table showing our search results</p>            
-	  <table class="table" id="table drink">
-		<thead>
-		  <tr>
-			<th>Drink name</th>
-			<th>drink type</th>
-			<th>country</th>
-			<th>size</th>
-			<th>price</th>
-		  </tr>
-		</thead>
-		<tbody>
-		  <tr>
-			<td>Drink name</td>
-			<td>drink type</td>
-			<td>country</td>
-			<td>size</td>
-			<td>price</td>
-		  </tr>
-		  <tr>
-			<td>Drink name</td>
-			<td>drink type</td>
-			<td>country</td>
-			<td>size</td>
-			<td>price</td>
-		  </tr>
-		  <tr>
-			<td>Drink name</td>
-			<td>drink type</td>
-			<td>country</td>
-			<td>size</td>
-			<td>price</td>
-		  </tr>
-		</tbody>
-	  </table>
-	</div>
-	
+	{{!base}}
+    
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
