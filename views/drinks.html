@@ -6,39 +6,28 @@
 
 <div class="container">
   <h2>Drinks</h2>
-  <p>This is going to be a table showing our search results</p>            
+  <p>Here are some drinks that would go well with your meal:</p>            
   <table class="table" id="table drink">
     <thead>
       <tr>
+	    <th>ID</th>
         <th>Drink name</th>
-        <th>drink type</th>
-        <th>country</th>
-        <th>size</th>
-        <th>price</th>
+        <!-- <th>Drink type</th> -->
+        <th>Country</th>
+        <th>Size</th>
+        <th>Alcohol content</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Drink name</td>
-        <td>drink type</td>
-        <td>country</td>
-        <td>size</td>
-        <td>price</td>
-      </tr>
-      <tr>
-        <td>Drink name</td>
-        <td>drink type</td>
-        <td>country</td>
-        <td>size</td>
-        <td>price</td>
-      </tr>
-      <tr>
-        <td>Drink name</td>
-        <td>drink type</td>
-        <td>country</td>
-        <td>size</td>
-        <td>price</td>
-      </tr>
+	  %for (id,ime,drzava,velikost,stopnja_alkohola,vrsta) in results:
+	    <tr>
+		  <td>{{id}}</td>
+		  <td>{{ime}}</td>
+		  <td>{{drzava}}</td>
+		  <td>{{velikost}}</td>
+		  <td>{{stopnja_alkohola}}</td>
+	    </tr>
+      %end
     </tbody>
   </table>
 </div>
