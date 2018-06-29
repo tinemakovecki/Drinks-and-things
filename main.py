@@ -29,6 +29,31 @@ def index():
 def index():
     return template('drink_info.html')
 
+@get('/drink_info/:x/')
+def get_drink_info(x):
+    """ Performs a search through the drink database about the drink with id x """
+    drink_query = """(SELECT DISTINCT pijaca.ime, drzava, velikost, stopnja_alkohola, vrste_pijace.ime AS vrsta, cena, opis
+                FROM pijaca JOIN vrste_pijace on pijaca.vrsta = vrste_pijace.id
+                WHERE pijaca.id = %s)"""
+    wine_query = """(SELECT barva,regija
+                    FROM vino WHERE id = %s)"""
+    taste_query = """(SELECT DISTINCT ime
+                    FROM okusi JOIN ima_okus ON okusi.id = ima_okus.okus
+                    WHERE vino = %s)"""
+    smell_query = """(SELECT DISTINCT ime
+                    FROM aroma JOIN ima_vonj ON aroma.id = ima_vonj.aroma
+                    WHERE vino = %s)"""
+    cur.execute(drink_query, x)
+    r1 = cur
+    cur.execute(wine_query, x)
+    r2 = cur
+    cur.execute(taste_query, x)
+    r3 = cur
+    cur.execute(smell_query, x)
+    r4 = cur
+
+    return template('drink_info.html', results=r1, res=r2, taste=r3, smell=r4)
+
 @post('/search_drinks')
 def search_drinks_post():
     """ Performs a search through the drink database with the given preferences """

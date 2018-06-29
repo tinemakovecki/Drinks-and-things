@@ -7,22 +7,41 @@
 
 <div class="card">
     <div class="card-body">
-        <h2 class="card-title">Ime pjace</h2>
-        <p class="card-text">"Rdece vino iz spanije, velikost,cena,procenti,leto, alpa kej tazga"</p>
+
+        <h2 class="card-title">{{ime}}</h2>
+        <p class="card-text">{{barva}} wine from {{drzava}}</p>
+
         <div class="media">
             <img class="mr-3" src="https://dsi2vjvztwiuk.cloudfront.net/website/products/104549/bottle/754772/original.png" height="500" alt="Generic placeholder image">
+
             <div class="media-body">
+
+                <div class="table-sm">
+                <table class="table" style="width:200px">
+
+                    <div class="row">
+                        <div class="col"><b>Alcohol:</b></div>
+                        <div class="col"><b>Price:</b></div>
+                        <div class="col"><b>Size:</b></div>
+                    </div>
+                    <div class="row">
+                        <div class="col"><b>{{stopnja_alkohola}} %</b></div>
+                        <div class="col"><b>{{cena}} €</b></div>
+                        <div class="col"><b>{{velikost}} l</b></div>
+                    </div>
+                </table>
+                </div>
+
                 <h5 class="mt-0">Description:</h5>
-                Zinck is run by Philippe and his wife, Pascale. The estate consists of 56 acres of vineyards that are being farmed organically, most of which are located in Eguisheim. Each vine is tended by hand and is harvested by hand. This is done to increase and insure the highest quality is attained, and the true character of the terroir is retained. The wines are fermented in temperature controlled stainless steel tanks for the preservation of fruit and to eliminate oxidation. -- Importer
-                <div class="gap-10"></div>
+                {{opis}}
                 <h5 class="mt-0">Taste:</h5>
-                blblalbalba
-                <div class="gap-10"></div>
+                {{okus}}
+
                 <h5 class="mt-0">Smell:</h5>
-                auauauuaa
-                <div class="gap-10"></div>
+                {{vonj}}
+
                 <h5 class="mt-0">Origin:</h5>
-                Država,regija
+                {{drzava}},{{regija}}
 
             </div>
         </div>
