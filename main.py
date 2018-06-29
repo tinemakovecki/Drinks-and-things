@@ -25,9 +25,13 @@ def index():
 def index():
     return template('search.html')
 
+@get('/drink_info')
+def index():
+    return template('drink_info.html')
+
 @post('/search_drinks')
 def search_drinks_post():
-    """ Performs a search through the drink databse with the given preferences """
+    """ Performs a search through the drink database with the given preferences """
 
     # collecting the values entered into the search form by the user
     query_dic = {"meat": request.forms.meat,
