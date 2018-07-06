@@ -480,3 +480,23 @@ def pairing_upload():
 pairing_upload()
 
 
+# ====================================== #
+# VIEWS
+# ====================================== #
+
+
+def search_view():
+    cur.execute("""CREATE VIEW search AS
+                (SELECT pijaca.id, pijaca.ime, pijaca.drzava, pijaca.velikost, pijaca.stopnja_alkohola, vrsta.id AS vrsta, hrana.ime AS hrana FROM pijaca 
+                JOIN vrste_pijace AS vrsta ON vrsta.id = pijaca.vrsta
+                JOIN priporocila AS p ON vrsta.id = p.vrsta_pijace
+                JOIN vrste_hrane AS hrana ON hrana.id = p.vrsta_hrane
+                GROUP BY pijaca.id, vrsta.id, hrana.ime)""")
+    connection.commit()
+    print('Search view created!')
+
+
+search_view()
+
+
+
