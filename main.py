@@ -25,13 +25,10 @@ def index():
 def index():
     return template('search.html')
 
-@get('/drink_info')
-def index():
-    return template('drink_info.html')
 
-@get('/drink_info/:x/')
-def get_drink_info(x):
-    """ Performs a search through the drink database about the drink with id x """
+@get('/wine_info/:x/')
+def get_wine_info(x):
+    """ Performs a search through the drink database about the wine with id x """
     drink_query = """(SELECT DISTINCT pijaca.ime, drzava, velikost, stopnja_alkohola, vrste_pijace.ime AS vrsta, cena, opis, slika
                 FROM pijaca JOIN vrste_pijace on pijaca.vrsta = vrste_pijace.id
                 WHERE pijaca.id = %s)"""
@@ -55,7 +52,21 @@ def get_drink_info(x):
     r4 = []
     for [s] in cur:
         r4.append(s)
-    return template('drink_info.html', res1=r1, res2=r2, taste=r3, smell=r4)
+    return template('wine_info.html', res1=r1, res2=r2, taste=r3, smell=r4)
+
+@get('/beer_info/:x/')
+def get_beer_info(x):
+    """ Performs a search through the drink database about the beer with id x """
+    drink_query = """(SELECT DISTINCT pijaca.ime, drzava, velikost, stopnja_alkohola, vrste_pijace.ime AS vrsta, cena, opis, slika
+                FROM pijaca JOIN vrste_pijace on pijaca.vrsta = vrste_pijace.id
+                WHERE pijaca.id = %s)"""
+    beer_query = """(SELECT pivovarna
+                    FROM pivo WHERE id = %s)"""
+    cur.execute(drink_query, [int(x)])
+    result = next(cur)
+    cur.execute(beer_query, [int(x)])
+    [brewery] = next(cur)
+    return template('beer_info.html', result=result, pivovarna=brewery)
 
 @post('/search_drinks')
 def search_drinks_post():

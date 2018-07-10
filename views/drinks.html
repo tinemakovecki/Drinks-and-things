@@ -23,7 +23,11 @@
 	  %for (id,ime,drzava,velikost,stopnja_alkohola,vrsta) in results:
 	    <tr>
 		  <td>{{id}}</td>
-            <td><a href="/drink_info/{{id}}/">{{ime}}</a></td>
+            % if id < 1042:
+            <td><a href="/beer_info/{{id}}/">{{ime}}</a></td>
+            % else:
+            <td><a href="/wine_info/{{id}}/">{{ime}}</a></td>
+            % end
 		  <td>{{drzava}}</td>
 		  <td>{{velikost}}</td>
 		  <td>{{stopnja_alkohola}}</td>
