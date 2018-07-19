@@ -40,14 +40,22 @@
                 <p>{{opis}}</p>
 
                 <h5 class="mt-0">Taste:</h5>
-                % for okus in taste:
-                <td>{{okus}},</td>
+                %for okus in taste:
+                %   if taste.index(okus) + 1 != len(taste):
+                        <td>{{okus}},</td>
+                %   else:
+                        <td>{{okus}}.</td>
+                %end
                 %end
 
                 <h5 class="mt-0">Smell:</h5>
-                % for vonj in smell:
-                    <td>{{vonj}}, </td>
-                % end
+                %for vonj in smell:
+                %   if smell.index(vonj) + 1 != len(smell):
+                        <td>{{vonj}}, </td>
+                %   else:
+                        <td>{{vonj}}. </td>
+                %end
+                %end
 
 
             </div>
