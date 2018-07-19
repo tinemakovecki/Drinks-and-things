@@ -11,25 +11,23 @@
   <table class="table" id="table drink">
     <thead>
       <tr>
-	    <th>ID</th>
+	    <th>Bottle</th>
         <th>Drink name</th>
         <!-- <th>Drink type</th> -->
         <th>Country</th>
-        <th>Size</th>
         <th>Alcohol content</th>
       </tr>
     </thead>
     <tbody>
-	  %for (id,ime,drzava,velikost,stopnja_alkohola,vrsta) in results:
+	  %for (id,ime,drzava,velikost,stopnja_alkohola,slika,vrsta) in results:
 	    <tr>
-		  <td>{{id}}</td>
+		  <td><img class="mr-3" src="{{slika}}" height="50"></td>
             % if id < 1042:
             <td><a href="/beer_info/{{id}}/">{{ime}}</a></td>
             % else:
             <td><a href="/wine_info/{{id}}/">{{ime}}</a></td>
             % end
 		  <td>{{drzava}}</td>
-		  <td>{{velikost}}</td>
 		  <td>{{stopnja_alkohola}}</td>
 	    </tr>
       %end

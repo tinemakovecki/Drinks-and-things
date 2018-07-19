@@ -25,6 +25,10 @@ def index():
 def index():
     return template('search.html')
 
+@get('/general_info')
+def index():
+    return template('general_info.html')
+
 
 @get('/wine_info/:x/')
 def get_wine_info(x):
@@ -110,7 +114,7 @@ def search_drinks_post():
 
     # constructing the sql command
     if len(key_terms) >= 1:
-        sql_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, vrsta
+        sql_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, vrsta
             FROM search WHERE hrana = %s)"""
     else:
         sql_query = """ SELECT * FROM search """
@@ -119,7 +123,7 @@ def search_drinks_post():
         for _ in range(1, len(key_terms)):
             additional_criteria = """
             INTERSECT
-            (SELECT id, ime, drzava, velikost, stopnja_alkohola, vrsta
+            (SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, vrsta
             FROM search WHERE hrana = %s)"""
             sql_query += additional_criteria
 

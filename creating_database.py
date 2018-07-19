@@ -487,7 +487,7 @@ pairing_upload()
 
 def search_view():
     cur.execute("""CREATE VIEW search AS
-                (SELECT pijaca.id, pijaca.ime, pijaca.drzava, pijaca.velikost, pijaca.stopnja_alkohola, vrsta.id AS vrsta, hrana.ime AS hrana FROM pijaca 
+                (SELECT pijaca.id, pijaca.ime, pijaca.drzava, pijaca.velikost, pijaca.stopnja_alkohola, pijaca.slika, vrsta.id AS vrsta, hrana.ime AS hrana FROM pijaca 
                 JOIN vrste_pijace AS vrsta ON vrsta.id = pijaca.vrsta
                 JOIN priporocila AS p ON vrsta.id = p.vrsta_pijace
                 JOIN vrste_hrane AS hrana ON hrana.id = p.vrsta_hrane
