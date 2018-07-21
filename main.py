@@ -13,6 +13,9 @@ psycopg2.extensions.register_type(psycopg2.extensions.UNICODE)  # bcoz šumniki
 # uncomment if you want to see error reports
 # debug(True)
 
+LAST_BEER_ID = 1041
+
+
 @get('/')
 def index():
     return template('front_page.html')
@@ -129,12 +132,30 @@ def search_drinks_post():
     l = query_dic.values()
     key_terms = [x for x in l if x != ""]
 
+    pref_drink = request.forms.drink
+    print(pref_drink)
+
     # constructing the sql command
     if len(key_terms) >= 1:
-        sql_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, vrsta
-            FROM search WHERE hrana = %s)"""
+        if pref_drink == "both":
+            sql_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, vrsta
+                            FROM search WHERE hrana = %s)"""
+        elif pref_drink == "beer":
+            sql_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, vrsta
+                            FROM search WHERE id <= 1041 AND hrana = %s)"""
+        else:
+            sql_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, vrsta
+                            FROM search WHERE id > 1041 AND hrana = %s)"""
     else:
-        sql_query = """ SELECT * FROM search """
+        if pref_drink == "both":
+            sql_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, vrsta
+                            FROM search)"""
+        elif pref_drink == "beer":
+            sql_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, vrsta
+                            FROM search WHERE id <= 1041)"""
+        else:
+            sql_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, vrsta
+                            FROM search WHERE id > 1041)"""
 
     if len(key_terms) > 1:
         for _ in range(1, len(key_terms)):
@@ -146,6 +167,7 @@ def search_drinks_post():
 
     # communication with database
     # TODO: fix the execute values!!!
+    #var = [LAST_BEER_ID] + key_terms
     cur.execute(sql_query, key_terms)
 
     # show the results

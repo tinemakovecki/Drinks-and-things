@@ -1,9 +1,10 @@
 %rebase('osnova.html')
 
+% LAST_BEER_ID = 1041
+
 <!-- SEARCH RESULT TABLE -->
 
-<a href="/search">drink search</a>
-<a href="/drink_info">drink info</a>
+<a href="/search">back to search form</a>
 
 <div class="container">
   <h2>Drinks</h2>
@@ -22,7 +23,7 @@
 	  %for (id,ime,drzava,velikost,stopnja_alkohola,slika,vrsta) in results:
 	    <tr>
 		  <td><img class="mr-3" src="{{slika}}" height="50"></td>
-            % if id < 1042:
+            % if id < LAST_BEER_ID:
             <td><a href="/beer_info/{{id}}/">{{ime}}</a></td>
             % else:
             <td><a href="/wine_info/{{id}}/">{{ime}}</a></td>
