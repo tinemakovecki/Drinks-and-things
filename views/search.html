@@ -3,7 +3,7 @@
 <!-- search form -->
 <form action="/search_drinks" method="POST">
 
-  <h2>Iskalni obrazec</h2>
+  <h2>Search form</h2>
   
   <!---------------------------------------->
   <!-- FOOD OPTIONS -->
@@ -11,59 +11,145 @@
   <div class="card">
     <div class="card-body">
 	
-	  <h2 class="card-title">Vrsta obroka</h2>
-      <p class="card-text">Izberite možnosti, ki ustrezajo vašemu obroku:</p>
-	  
-	  
-      <!-- ONE OPTION CHOICES -->
-	  
-      <div class="row">
-	    <div class="col"><b>Meat type:</b></div>
-	    <div class="col"><b>Preparation:</b></div>
-	    <div class="col"><b>Starch type:</b></div>
-	  </div>
-	  
-	  <div class="row">
-	    <div class="col">
-          <!-- meat select -->
-		  <select class="custom-select" name="meat">
-			<option selected>meat type</option>
-			<option value="red meat">red meat</option>
-			<option value="cured meat">cured meat</option>
-			<option value="pork">pork</option>
-			<option value="poultry">poultry</option>
-			<option value="mollusk">mollusk</option>
-			<option value="fish">fish</option>
-			<option value="shellfish">shellfish</option>
-		  </select>
-		</div>
-		
-		<div class="col">
-		  <!-- preparation -->
-		  <select class="custom-select" name="prep">
-			<option selected>kind of preparation</option>
-			<option value="grilled">grilled</option>
-			<option value="fried">fried</option>
-			<option value="roasted">roasted</option>
-			<option value="smoked">smoked</option>
-			<option value="steamed">steamed</option>
-		  </select>
-		</div>
-		  
-		<div class="col">
-		  <!-- starches -->
-		  <select class="custom-select" name="starch">
-			<option selected>starch type</option>
-			<option value="white starches">white starch</option>
-			<option value="whole wheat">whole wheat</option>
-			<option value="sweet starchy vegetable">sweet starchy vegetables</option>
-			<option value="potato">potato</option>
-		  </select>
-		</div>
-	  </div>
+	  <h2 class="card-title">Meal type</h2>
+      <p class="card-text">Choose the options, that suit your meal:</p>
       
       
       <!-- CHECK LISTS -->
+
+      <div class="row">
+
+		  <!-- Preparation -->
+		<div class="col">
+		  <div class="card">
+			<div class="card-body">
+
+			  <h4 class="card-title">Preparation</h4>
+
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="grilled" name="grilled">
+				<label class="form-check-label" for="grilled">
+				  Grilled
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="fried" name="fried">
+				<label class="form-check-label" for="fried">
+				  Fried
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="roasted" name="roasted">
+				<label class="form-check-label" for="roasted">
+				  Roasted
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="smoked" name="smoked">
+				<label class="form-check-label" for="smoked">
+				  Smoked
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="steamed" name="steamed">
+				<label class="form-check-label" for="steamed">
+				  Steamed
+				</label>
+			  </div>
+			</div>
+		  </div>
+		</div>
+
+
+		  <!-- Meat -->
+		<div class="col">
+		  <div class="card">
+			<div class="card-body">
+
+			  <h4 class="card-title">Meat type</h4>
+
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="red meat" name="red_meat">
+				<label class="form-check-label" for="red_meat">
+				  Red Meat
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="cured meat" name="cured_meat">
+				<label class="form-check-label" for="cured_meat">
+				  Cured Meat
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="pork" name="pork">
+				<label class="form-check-label" for="pork">
+				  Pork
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="poultry" name="poultry">
+				<label class="form-check-label" for="poultry">
+				  Poultry
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="mollusk" name="mollusk">
+				<label class="form-check-label" for="mollusk">
+				  Mollusk
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="fish" name="fish">
+				<label class="form-check-label" for="fish">
+				  Fish
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="shellfish" name="shellfish">
+				<label class="form-check-label" for="shellfish">
+				  Shellfish
+				</label>
+			  </div>
+			</div>
+		  </div>
+		</div>
+
+		  <!-- Starch type -->
+		<div class="col">
+		  <div class="card">
+			<div class="card-body">
+
+			  <h4 class="card-title">Starch type</h4>
+
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="white starches" name="white_starches">
+				<label class="form-check-label" for="white_starches">
+				  White Starch
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="whole wheat" name="whole_wheat">
+				<label class="form-check-label" for="whole_wheat">
+				  Whole Wheat
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="sweet starchy vegetable" name="sweet_starchy_vegetable">
+				<label class="form-check-label" for="sweet_starchy_vegetable">
+				  Sweet Starchy Vegetables
+				</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="checkbox" value="potato" name="potato">
+				<label class="form-check-label" for="potato">
+				  Potato
+				</label>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  </div>
+
 	  
       <div class="row">
 	  
@@ -244,5 +330,5 @@
   
   <!-- TODO! -->
   
-  <p><input type="submit" value="Išči"></p>
+  <p><input type="submit" value="Search"></p>
 </form>

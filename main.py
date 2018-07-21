@@ -77,9 +77,26 @@ def search_drinks_post():
     """ Performs a search through the drink database with the given preferences """
 
     # collecting the values entered into the search form by the user
-    query_dic = {"meat": request.forms.meat,
-                 "prep": request.forms.prep,
-                 "starch":  request.forms.starch,
+    query_dic = {"grilled": request.forms.grilled,
+                 "fried": request.forms.fried,
+                 "roasted": request.forms.roasted,
+                 "smoked": request.forms.smoked,
+                 "steamed": request.forms.steamed,
+
+                 #meat
+                 "red_meat": request.forms.red_meat,
+                 "cured": request.forms.cured_meat,
+                 "pork": request.forms.pork,
+                 "poultry": request.forms.poultry,
+                 "mollusk":  request.forms.mollusk,
+                 "fish": request.forms.fish,
+                 "shellfish": request.forms.shellfish,
+
+                 # starch
+                 "white": request.forms.white_starch,
+                 "whole": request.forms.whole_wheat,
+                 "sweet": request.forms.sweet_starchy_vegetables,
+                 "potato": request.forms.potato,
 
                  # vegetables
                  "alliums": request.forms.alliums,
