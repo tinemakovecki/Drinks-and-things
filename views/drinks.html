@@ -10,6 +10,7 @@
 
 <div class="container">
   <h2>Drinks</h2>
+    <!--TODO tuki bi lahko pisal se ker tip vina oz piva pase k takmu obroku (bold red/IPA npr.), dol pa predlog kere flase so to-->
     %if len(res) != 0:
       <p>Here are some drinks that would go well with your meal:</p>
       <table class="table" id="table drink">
@@ -38,8 +39,8 @@
                   <td><a href="/wine_info/{{id}}/">{{ime}}</a></td>
                   <td>Wine</td>
                 %end
-              <td>{{drzava}}</td>
-              <td>{{stopnja_alkohola}}</td>
+              <td><a href="/country/{{drzava}}/">{{drzava}}</a></td>    <!-- bi blo bols posebi country_beer, country_wine? -->
+              <td>{{stopnja_alkohola}} %</td>
               %if cena is not None:
                 <td>{{round(cena / velikost, 2)}} €/l</td>
               %else:

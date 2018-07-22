@@ -75,6 +75,15 @@ def get_beer_info(x):
     [brewery] = next(cur)
     return template('beer_info.html', result=result, pivovarna=brewery)
 
+@get('/country/:x/')
+def get_country(x):
+    """ Performs a search through the drink database with the chosen country """
+    country_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, cena, vrsta
+                        FROM pijaca WHERE drzava = %s)"""
+    cur.execute(country_query, [x])
+    results = cur
+    return template('drinks.html', results=results, pictures=True)
+
 @post('/search_drinks')
 def search_drinks_post():
     """ Performs a search through the drink database with the given preferences """
