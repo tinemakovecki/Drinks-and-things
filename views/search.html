@@ -11,14 +11,34 @@
   <div class="card">
     <div class="card-body">
 
-	  <h2 class="card-title">Preferred drink</h2>
-      <p class="card-text">Do you prefer wine or beer with your meal?</p>
-		 <select class="custom-select" name="drink">
-			<option value="both">Both</option>
-			<option value="wine">Wine</option>
-			<option value="beer">Beer</option>
-		 </select>
+	  <h2 class="card-title">Preference</h2>
+	  <div class="row">
 
+		  <!-- Wine/beer -->
+		<div class="col">
+		  <div class="card">
+			<div class="card-body">
+			  <p class="card-text">Do you prefer wine or beer with your meal?</p>
+				 <select class="custom-select" name="drink">
+					<option value="both">Both</option>
+					<option value="wine">Wine</option>
+					<option value="beer">Beer</option>
+				 </select>
+			</div>
+		  </div>
+		</div>
+		<div class="col">
+		  <div class="card">
+			<div class="card-body">
+			  <p class="card-text">Would you like to see pictures of all suggested drinks?</p>
+				 <select class="custom-select" name="pictures">
+					<option value="yes">Yes (longer loading)</option>
+					<option value="no">No</option>
+				 </select>
+			</div>
+		  </div>
+		</div>
+	  </div>
 	  <h2 class="card-title">Meal type</h2>
       <p class="card-text">Choose the options, that suit your meal:</p>
       

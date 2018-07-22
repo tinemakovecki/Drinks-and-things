@@ -78,7 +78,6 @@ def get_beer_info(x):
 @post('/search_drinks')
 def search_drinks_post():
     """ Performs a search through the drink database with the given preferences """
-
     # collecting the values entered into the search form by the user
     query_dic = {"grilled": request.forms.grilled,
                  "fried": request.forms.fried,
@@ -133,7 +132,6 @@ def search_drinks_post():
     key_terms = [x for x in l if x != ""]
 
     pref_drink = request.forms.drink
-    print(pref_drink)
 
     # constructing the sql command
     if len(key_terms) >= 1:
@@ -172,7 +170,13 @@ def search_drinks_post():
 
     # show the results
     results = cur
-    return template('drinks.html', results=results)
+
+    # does the user want to see pictures by the suggested drinks
+    pictures = True
+    if request.forms.pictures == "no":
+        pictures = False
+
+    return template('drinks.html', results=results, pictures=pictures)
 
     #redirect("/")
 

@@ -6,32 +6,48 @@
 
 <a href="/search">back to search form</a>
 
+% res = list(results)       # ce ne nardis posebi, sprazne slovar ko ga prvic uporab (ko prever dolzino)
+
 <div class="container">
   <h2>Drinks</h2>
-  <p>Here are some drinks that would go well with your meal:</p>            
-  <table class="table" id="table drink">
-    <thead>
-      <tr>
-	    <th>Bottle</th>
-        <th>Drink name</th>
-        <!-- <th>Drink type</th> -->
-        <th>Country</th>
-        <th>Alcohol content</th>
-      </tr>
-    </thead>
-    <tbody>
-	  %for (id,ime,drzava,velikost,stopnja_alkohola,slika,vrsta) in results:
-	    <tr>
-		  <td><img class="mr-3" src="{{slika}}" height="50"></td>
-            % if id < LAST_BEER_ID:
-            <td><a href="/beer_info/{{id}}/">{{ime}}</a></td>
-            % else:
-            <td><a href="/wine_info/{{id}}/">{{ime}}</a></td>
-            % end
-		  <td>{{drzava}}</td>
-		  <td>{{stopnja_alkohola}}</td>
-	    </tr>
-      %end
-    </tbody>
-  </table>
+    %if len(res) != 0:
+      <p>Here are some drinks that would go well with your meal:</p>
+      <table class="table" id="table drink">
+        <thead>
+          <tr>
+            %if pictures:
+              <th>Bottle</th>
+            %else:
+              <th>ID</th>
+            %end
+            <th>Drink name</th>
+            <th>Drink type</th>
+            <th>Country</th>
+            <th>Alcohol content</th>
+          </tr>
+        </thead>
+        <tbody>
+          %for [id,ime,drzava,velikost,stopnja_alkohola,slika,vrsta] in res:
+            <tr>
+              %if pictures:
+                <td><img class="mr-3" src="{{slika}}" height="50"></td>
+              %else:
+                <td>{{id}}</td>
+              %end
+                %if id <= LAST_BEER_ID:
+                  <td><a href="/beer_info/{{id}}/">{{ime}}</a></td>
+                  <td>Beer</td>
+                %else:
+                  <td><a href="/wine_info/{{id}}/">{{ime}}</a></td>
+                  <td>Wine</td>
+                %end
+              <td>{{drzava}}</td>
+              <td>{{stopnja_alkohola}}</td>
+            </tr>
+          %end
+        </tbody>
+      </table>
+    %else:
+        <i>We can't find any drink that would go well with all of your ingredients. Try leaving out the less important ones.</i>
+    %end
 </div>
