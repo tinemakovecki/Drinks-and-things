@@ -32,6 +32,9 @@ def index():
 def index():
     return template('general_info.html')
 
+@get('/statistics')
+def index():
+    return template('statistics.html')
 
 @get('/wine_info/:x/')
 def get_wine_info(x):
