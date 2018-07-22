@@ -17,22 +17,19 @@
           <tr>
             %if pictures:
               <th>Bottle</th>
-            %else:
-              <th>ID</th>
             %end
             <th>Drink name</th>
             <th>Drink type</th>
             <th>Country</th>
             <th>Alcohol content</th>
+            <th>Relative price</th>
           </tr>
         </thead>
         <tbody>
-          %for [id,ime,drzava,velikost,stopnja_alkohola,slika,vrsta] in res:
+          %for [id,ime,drzava,velikost,stopnja_alkohola,slika,cena,vrsta] in res:
             <tr>
               %if pictures:
-                <td><img class="mr-3" src="{{slika}}" height="50"></td>
-              %else:
-                <td>{{id}}</td>
+                <td><img class="mr-3" src="{{slika}}" height="45"></td>
               %end
                 %if id <= LAST_BEER_ID:
                   <td><a href="/beer_info/{{id}}/">{{ime}}</a></td>
@@ -43,6 +40,11 @@
                 %end
               <td>{{drzava}}</td>
               <td>{{stopnja_alkohola}}</td>
+              %if cena is not None:
+                <td>{{round(cena / velikost, 2)}} €/l</td>
+              %else:
+                <td>Price not known</td>
+              %end
             </tr>
           %end
         </tbody>

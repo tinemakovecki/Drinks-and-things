@@ -136,30 +136,30 @@ def search_drinks_post():
     # constructing the sql command
     if len(key_terms) >= 1:
         if pref_drink == "both":
-            sql_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, vrsta
+            sql_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, cena, vrsta
                             FROM search WHERE hrana = %s)"""
         elif pref_drink == "beer":
-            sql_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, vrsta
+            sql_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, cena, vrsta
                             FROM search WHERE id <= 1041 AND hrana = %s)"""
         else:
-            sql_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, vrsta
+            sql_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, cena, vrsta
                             FROM search WHERE id > 1041 AND hrana = %s)"""
     else:
         if pref_drink == "both":
-            sql_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, vrsta
+            sql_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, cena, vrsta
                             FROM search)"""
         elif pref_drink == "beer":
-            sql_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, vrsta
+            sql_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, cena, vrsta
                             FROM search WHERE id <= 1041)"""
         else:
-            sql_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, vrsta
+            sql_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, cena, vrsta
                             FROM search WHERE id > 1041)"""
 
     if len(key_terms) > 1:
         for _ in range(1, len(key_terms)):
             additional_criteria = """
             INTERSECT
-            (SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, vrsta
+            (SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, cena, vrsta
             FROM search WHERE hrana = %s)"""
             sql_query += additional_criteria
 
