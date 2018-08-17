@@ -10,31 +10,39 @@
     <div class="card-body">
 
         <h2 class="card-title">{{ime}}</h2>
-        <p class="card-text">{{barva}} wine from {{drzava}}: {{vrsta}}</p>
+        <p class="card-text"><i>{{vrsta}}; a {{barva}} wine from {{regija}}, {{drzava}}</i></p>
 
         <div class="media">
             <img class="mr-3" src="{{slika}}" height="500">
 
             <div class="media-body">
 
-                <div class="table-sm">
-                <table class="table" style="width:200px">
-
-                    <div class="row">
-                        <div class="col"><b>Alcohol:</b></div>
-                        <div class="col"><b>Price:</b></div>
-                        <div class="col"><b>Size:</b></div>
-                    </div>
-                    <div class="row">
-                        <div class="col">{{stopnja_alkohola}} %</div>
-                        <div class="col">{{cena}} €</div>
-                        <div class="col">{{velikost}} l</div>
-                    </div>
-                </table>
-                </div>
-
-                <h5 class="mt-0">Origin:</h5>
-                <p>{{drzava}}, {{regija}}</p>
+				<div class="table-sm">
+					<table class="table table-bordered" style="width:400px">
+						<tbody>
+							<tr>
+								<td><b>Alcohol:</b></td>
+								<td>{{stopnja_alkohola}} %</td>
+							</tr>
+							<tr>
+								<td><b>Size:</b></td>
+								<td>{{velikost}} l</td>
+							</tr> 
+							<tr>
+								<td><b>Price:</b></td>
+								<td>{{cena}} €</td>
+							</tr>
+							<tr>
+								<td><b>Type:</b></td>
+								<td>{{vrsta}}</td>
+							</tr> 
+							<tr>
+								<td><b>Origin:</b></td>
+								<td>{{regija}}, {{drzava}}</td>
+							</tr> 
+						</tbody>
+					</table>
+				</div>
 
                 <h5>Description:</h5>
                 <p>{{opis}}</p>
