@@ -152,20 +152,20 @@ def search_drinks_post():
                             FROM search WHERE hrana = %s)"""
         elif pref_drink == "beer":
             sql_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, cena, vrsta
-                            FROM search WHERE id <= 1041 AND hrana = %s)"""
+                            FROM search WHERE vrsta <= 34 AND hrana = %s)"""
         else:
             sql_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, cena, vrsta
-                            FROM search WHERE id > 1041 AND hrana = %s)"""
+                            FROM search WHERE vrsta > 34 AND hrana = %s)"""
     else:
         if pref_drink == "both":
             sql_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, cena, vrsta
                             FROM search)"""
         elif pref_drink == "beer":
             sql_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, cena, vrsta
-                            FROM search WHERE id <= 1041)"""
+                            FROM search WHERE vrsta <= 34)"""
         else:
             sql_query = """(SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, cena, vrsta
-                            FROM search WHERE id > 1041)"""
+                            FROM search WHERE vrsta > 34)"""
 
     if len(key_terms) > 1:
         for _ in range(1, len(key_terms)):
@@ -174,6 +174,19 @@ def search_drinks_post():
             (SELECT id, ime, drzava, velikost, stopnja_alkohola, slika, cena, vrsta
             FROM search WHERE hrana = %s)"""
             sql_query += additional_criteria
+
+    # selecting what results are sorted by
+    sort_key = request.forms.sort
+    sort_dic = {"alcohol": "stopnja_alkohola",
+                "price": "cena",
+                "size": "velikost",
+                "country": "drzava"}
+    # select the sort order
+    if request.forms.descending:
+        sort_string = " ORDER BY {} DESC".format(sort_dic[sort_key])
+    else:
+        sort_string = " ORDER BY {} ASC".format(sort_dic[sort_key])
+    sql_query += sort_string
 
     # communication with database
     # TODO: fix the execute values!!!

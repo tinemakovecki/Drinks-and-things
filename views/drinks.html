@@ -4,12 +4,16 @@
 
 <!-- SEARCH RESULT TABLE -->
 
-<a href="/search">back to search form</a>
-
 % res = list(results)       # ce ne nardis posebi, sprazne slovar ko ga prvic uporab (ko prever dolzino)
 
 <div class="container">
-  <h2>Drinks</h2>
+
+  <div class="row">
+	<div class="col"><h2>Drinks</h2></div>
+	<!-- back to search button -->
+	<div class="col"><a class="btn btn-dark" href="/search" role="button">Search again</a></div>
+  </div>
+  
     <!--TODO tuki bi lahko pisal se ker tip vina oz piva pase k takmu obroku (bold red/IPA npr.), dol pa predlog kere flase so to-->
     %if len(res) != 0:
       <p>Here are some drinks that would go well with your meal:</p>
