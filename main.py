@@ -115,7 +115,8 @@ def search_drinks_post():
                  # vegetables
                  "alliums": request.forms.alliums,
                  "green": request.forms.green,
-                 "mushrooms": request.forms.mushrooms,
+                 "root": request.forms.root,
+                 "mushrooms": request.forms.funghi,
                  "beans": request.forms.beans,
                  "nuts": request.forms.nuts,
                  "nightshades": request.forms.nightshades,
