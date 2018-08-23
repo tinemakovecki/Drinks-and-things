@@ -19,12 +19,89 @@
   </p>
   
   <!---------------------------------------->
-  <!-- FOOD OPTIONS -->
+  <!-- SEARCH FORM -->
   <!---------------------------------------->
+  
   <div class="card">
     <div class="card-body">
+	
+	<!---------------------------------------->
+    <!-- PREFERENCES -->
+    <!---------------------------------------->
+  
+    <p>
+		<button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#preferences" aria-expanded="false" aria-controls="collapseExample">
+		 Preferences
+		</button>
+	</p>
+	<div class="collapse" id="preferences">
+	  
+		<h2 class="card-title">Preferences</h2>
+		
+		<p class="card-text">Select you preferences:</p>
+		
+		  <div class="row">
+			  <!-- Wine/beer -->
+			<div class="col">
+			  <div class="card">
+				<div class="card-body">
+				  <p class="card-text">Do you prefer wine or beer with your meal?</p>
+					 <select class="custom-select" name="drink">
+						<option value="both">Both</option>
+						<option value="wine">Wine</option>
+						<option value="beer">Beer</option>
+					 </select>
+				</div>
+			  </div>
+			</div>
+			  <!-- Pictures -->
+			<div class="col">
+			  <div class="card">
+				<div class="card-body">
+				  <p class="card-text">Would you like to see pictures of all suggested drinks?</p>
+					 <select class="custom-select" name="pictures">
+						<option value="no">No</option>
+						<option value="yes">Yes (longer loading)</option>
+					 </select>
+				</div>
+			  </div>
+			</div>
+				<!-- Sorting -->
+			<div class="col">
+			  <div class="card">
+				<div class="card-body">
+				  <p class="card-text">How would you like to have the drinks sorted by?</p>
+					<div class="row">
+					  <div class="col">
+						<select class="custom-select" name="sort">
+						  <option value="price">Price</option>
+						  <option value="country">Country</option>
+						  <option value="alcohol">Alcohol content</option>
+						  <option value="size">Size</option>
+						</select>
+					  </div>
+					  <div class="col">
+						<div class="form-check">
+						  <input class="form-check-input" type="checkbox" value="descending" name="descending">
+						  <label class="form-check-label" for="descending">
+							  Descending
+						  </label>
+						</div>
+					  </div>
+					</div>
+				</div>
+			  </div>
+		  </div>
+		  
+	  </div>
+	</div>
+	
+	
+	<!---------------------------------------->
+    <!-- FOOD OPTIONS -->
+    <!---------------------------------------->
 
-	  <h2 class="card-title">Meal type</h2>
+	<h2 class="card-title">Meal type</h2>
       <p class="card-text">Choose the options that suit your meal:</p>
       
       
@@ -336,72 +413,16 @@
 		<div class="col"></div>
 		<div class="col"></div>
 	  </div>
-
-	  <h2 class="card-title">Preferences</h2>
-	  <div class="row">
-
-		  <!-- Wine/beer -->
-		<div class="col">
-		  <div class="card">
-			<div class="card-body">
-			  <p class="card-text">Do you prefer wine or beer with your meal?</p>
-				 <select class="custom-select" name="drink">
-					<option value="both">Both</option>
-					<option value="wine">Wine</option>
-					<option value="beer">Beer</option>
-				 </select>
-			</div>
-		  </div>
-		</div>
-		  <!-- Pictures -->
-		<div class="col">
-		  <div class="card">
-			<div class="card-body">
-			  <p class="card-text">Would you like to see pictures of all suggested drinks?</p>
-				 <select class="custom-select" name="pictures">
-					<option value="yes">Yes (longer loading)</option>
-					<option value="no">No</option>
-				 </select>
-			</div>
-		  </div>
-		</div>
-		    <!-- Sorting -->
-		<div class="col">
-		  <div class="card">
-			<div class="card-body">
-			  <p class="card-text">How would you like to have the drinks sorted by?</p>
-				<div class="row">
-				  <div class="col">
-					<select class="custom-select" name="sort">
-					  <option value="price">Price</option>
-					  <option value="country">Country</option>
-					  <option value="alcohol">Alcohol content</option>
-					  <option value="size">Size</option>
-					</select>
-				  </div>
-				  <div class="col">
-					<div class="form-check">
-					  <input class="form-check-input" type="checkbox" value="descending" name="descending">
-					  <label class="form-check-label" for="descending">
-						  Descending
-					  </label>
-					</div>
-				  </div>
-				</div>
-		    </div>
-		  </div>
-		</div>
-	  </div>
 	  
-   </div>
- </div>
-  
+	  
+  </div>
+</div>
 
-  <!---------------------------------------->
-  <!-- DRINK OPTIONS -->
-  <!---------------------------------------->
+
+  <br>
+ 
+  <button class="btn btn-dark" type="submit" value="Search"> 
+    Submit
+  </button>
   
-  <!-- TODO! -->
-  
-  <p><input type="submit" value="Search"></p>
 </form>
