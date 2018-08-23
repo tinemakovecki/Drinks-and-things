@@ -2,9 +2,7 @@
 # -*- encoding: utf-8 -*-
 
 from bottle import *
-
-# TODO: switch to public authorization
-import auth
+import auth_public as auth
 
 # import psycopg2
 import psycopg2, psycopg2.extensions, psycopg2.extras
