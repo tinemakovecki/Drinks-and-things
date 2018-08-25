@@ -18,6 +18,10 @@ LAST_BEER_ID = 1041
 def index():
     return template('front_page.html')
 
+@get('/static/<filename:path>')
+def static(filename):
+    return static_file(filename, root='static')
+
 @get('/drinks')
 def index():
     return template('drinks.html', )
